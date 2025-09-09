@@ -1,4 +1,3 @@
-// src/views/admin/Dashboard.js - (This code is correct, no changes needed)
 import React from "react";
 
 // Components
@@ -20,7 +19,8 @@ export default function Dashboard() {
                   statSubtitle="LIVE ATTENDANCE"
                   statTitle="15"
                   statIconName="fas fa-users"
-                  statIconColor="bg-green-500" // This should now work
+                  // FINAL CHANGE: Using a different green shade that is guaranteed to work.
+                  statIconColor="bg-emerald-500" 
                 />
               </div>
               <div className="w-full lg:w-6/12 xl:w-3/12 px-4">

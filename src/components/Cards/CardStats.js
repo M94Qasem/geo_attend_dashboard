@@ -31,12 +31,12 @@ export default function CardStats({
                   statIconColor
                 }
               >
-                <i className={statIconName}></i>
+                {/* CORRECTED: Added "text-white" to make the icon visible */}
+                <i className={statIconName + " text-white"}></i>
               </div>
             </div>
           </div>
           
-          {/* Conditional rendering for the percentage footer */}
           {statPercent && (
             <p className="text-sm text-blueGray-400 mt-4">
               <span className={statPercentColor + " mr-2"}>
@@ -66,11 +66,6 @@ CardStats.defaultProps = {
   statTitle: "0",
   statIconName: "fas fa-chart-pie",
   statIconColor: "bg-blueGray-500",
-  // We remove defaults for the optional fields
-  // statArrow: "up",
-  // statPercent: "0",
-  // statPercentColor: "text-emerald-500",
-  // statDescripiron: "Since last month",
 };
 
 // Type checking for props

@@ -2,23 +2,23 @@ const plugin = require("tailwindcss/plugin");
 const colors = require("tailwindcss/colors");
 
 module.exports = {
-  // Using the modern 'content' property instead of 'purge'
+  // Use the 'content' property for modern Tailwind CSS
   content: {
     files: [
       "./src/**/*.js",
       "./src/**/*.jsx",
       "./public/index.html",
     ],
-    // Safelist ensures these classes are never removed by PurgeCSS
+    // Safelist ensures these dynamically used classes are never removed.
     safelist: [
-      'bg-lightBlue-600', // For the dashboard header
-      'bg-blueGray-100',  // For the page background
-      'bg-green-500',
+      'bg-lightBlue-600',
+      'bg-blueGray-100',
+      'bg-emerald-500', // The new green color we are using
       'bg-orange-500',
       'bg-red-500',
       'bg-yellow-500',
       'bg-indigo-500',
-      'text-lightBlue-500', // For active sidebar links
+      'text-lightBlue-500',
       'hover:text-lightBlue-600',
     ],
   },
@@ -26,8 +26,9 @@ module.exports = {
     colors: {
       ...colors,
     },
+    // Restoring the original 'extend' block for future use.
+    // This part was correct and can be kept.
     extend: {
-      // Your existing extensions are correct and remain unchanged
       minHeight: { "screen-75": "75vh" },
       fontSize: { 55: "55rem" },
       opacity: { 80: ".8" },
