@@ -2,24 +2,18 @@ import React from "react";
 import PropTypes from "prop-types";
 
 // This component was originally CardPageVisits, now repurposed for our needs.
-export default function CardLiveFeed({ color }) {
+export default function CardLiveFeed() {
   return (
     <>
-      <div
-        className={
-          "relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded " +
-          (color === "light" ? "bg-white" : "bg-lightBlue-900 text-white")
-        }
-      >
+      {/* 
+        FIX: Added 'h-full' to make the card stretch to the full height of its parent.
+        Also simplified the className by removing the dynamic color logic.
+      */}
+      <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded bg-white h-full">
         <div className="rounded-t mb-0 px-4 py-3 border-0">
           <div className="flex flex-wrap items-center">
             <div className="relative w-full px-4 max-w-full flex-grow flex-1">
-              <h3
-                className={
-                  "font-semibold text-base " +
-                  (color === "light" ? "text-blueGray-700" : "text-white")
-                }
-              >
+              <h3 className="font-semibold text-base text-blueGray-700">
                 Live Attendance Feed
               </h3>
             </div>
@@ -38,34 +32,14 @@ export default function CardLiveFeed({ color }) {
           <table className="items-center w-full bg-transparent border-collapse">
             <thead>
               <tr>
-                <th
-                  className={
-                    "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
-                    (color === "light"
-                      ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
-                      : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
-                  }
-                >
+                {/* Simplified classNames for table headers */}
+                <th className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100">
                   Employee
                 </th>
-                <th
-                  className={
-                    "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
-                    (color === "light"
-                      ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
-                      : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
-                  }
-                >
+                <th className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100">
                   Check-in Time
                 </th>
-                <th
-                  className={
-                    "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
-                    (color === "light"
-                      ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
-                      : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
-                  }
-                >
+                <th className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100">
                   Location
                 </th>
               </tr>
@@ -115,10 +89,4 @@ export default function CardLiveFeed({ color }) {
   );
 }
 
-CardLiveFeed.defaultProps = {
-  color: "light",
-};
-
-CardLiveFeed.propTypes = {
-  color: PropTypes.oneOf(["light", "dark"]),
-};
+// We no longer need propTypes or defaultProps for color
