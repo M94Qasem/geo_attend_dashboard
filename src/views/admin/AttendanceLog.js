@@ -21,24 +21,24 @@ export default function AttendanceLog() {
 
   return (
     <>
-      {/* START: Header with Stats Cards */}
-      <div className="relative bg-sky-600 md:pt-32 pb-32 pt-12">
+      {/* Header */}
+      <div className="relative bg-lightBlue-600 md:pt-32 pb-32 pt-12">
         <div className="px-4 md:px-10 mx-auto w-full">
           <div>
-            {/* Card stats row */}
+            {/* Card stats */}
             <div className="flex flex-wrap">
               <div className="w-full lg:w-6/12 xl:w-3/12 px-4">
                 <CardStats
                   statSubtitle="Total Records"
-                  statTitle="3,450" // This will be dynamic
+                  statTitle="3,450"
                   statIconName="fas fa-database"
-                  statIconColor="bg-blue-500"
+                  statIconColor="bg-lightblue-500"
                 />
               </div>
               <div className="w-full lg:w-6/12 xl:w-3/12 px-4">
                 <CardStats
                   statSubtitle="Total Overrides"
-                  statTitle="76" // This will be dynamic
+                  statTitle="76"
                   statIconName="fas fa-exclamation-triangle"
                   statIconColor="bg-yellow-500"
                 />
@@ -46,7 +46,7 @@ export default function AttendanceLog() {
               <div className="w-full lg:w-6/12 xl:w-3/12 px-4">
                 <CardStats
                   statSubtitle="Total Late"
-                  statTitle="123" // This will be dynamic
+                  statTitle="123"
                   statIconName="fas fa-clock"
                   statIconColor="bg-orange-500"
                 />
@@ -54,7 +54,7 @@ export default function AttendanceLog() {
               <div className="w-full lg:w-6/12 xl:w-3/12 px-4">
                 <CardStats
                   statSubtitle="Total Absences"
-                  statTitle="21" // This will be dynamic
+                  statTitle="21"
                   statIconName="fas fa-user-slash"
                   statIconColor="bg-red-500"
                 />
@@ -63,10 +63,8 @@ export default function AttendanceLog() {
           </div>
         </div>
       </div>
-      {/* END: Header with Stats Cards */}
-
-      {/* Page content starts here, with a negative margin to overlap the header */}
-      <div className="px-4 md:px-10 mx-auto w-full -m-24">
+      
+      <div className="px-4 md:px-10 mx-auto w-full -m-16">
         <div className="flex flex-wrap mt-4">
           <div className="w-full mb-12 px-4">
             <CardTable title="Detailed Attendance Log" columns={columns} data={data} />

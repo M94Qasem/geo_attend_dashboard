@@ -2,32 +2,35 @@ const plugin = require("tailwindcss/plugin");
 const colors = require("tailwindcss/colors");
 
 module.exports = {
-  // Use the 'content' property for modern Tailwind CSS
   content: {
     files: [
       "./src/**/*.js",
       "./src/**/*.jsx",
       "./public/index.html",
     ],
-    // Safelist ensures these dynamically used classes are never removed.
     safelist: [
-      'bg-lightBlue-600',
-      'bg-blueGray-100',
-      'bg-emerald-500', // The new green color we are using
+      // --- Common Colors ---
+      'bg-sky-600',       // Main header background
+      'bg-blueGray-100',   // Page background
+      'bg-emerald-500',
       'bg-orange-500',
       'bg-red-500',
       'bg-yellow-500',
       'bg-indigo-500',
-      'text-lightBlue-500',
-      'hover:text-lightBlue-600',
+      'text-sky-500',      // Active sidebar links
+      'hover:text-sky-600',
+      'bg-blueGray-700',   // Dark chart background
+      'bg-blue-500',       // For "Total Records" card icon
     ],
   },
   theme: {
+    // By defining `colors` here, we are replacing the default palette.
+    // This is correct as we are spreading the full `colors` object.
     colors: {
       ...colors,
     },
-    // Restoring the original 'extend' block for future use.
-    // This part was correct and can be kept.
+    // The `extend` block is for adding custom utilities without removing the defaults.
+    // Your original `extend` block is perfect.
     extend: {
       minHeight: { "screen-75": "75vh" },
       fontSize: { 55: "55rem" },

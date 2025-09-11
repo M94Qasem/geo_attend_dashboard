@@ -6,9 +6,9 @@ export default function CardTable({ title, columns, data }) {
     <>
       <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded bg-white">
         {/* Card Header */}
-        <div className="rounded-t mb-0 px-4 py-3 border-0">
+        <div className="rounded-t mb-0 px-6 py-4 border-0">
           <div className="flex flex-wrap items-center">
-            <div className="relative w-full px-4 max-w-full flex-grow flex-1">
+            <div className="relative w-full max-w-full flex-grow flex-1">
               <h3 className="font-semibold text-lg text-blueGray-700">
                 {title}
               </h3>
@@ -16,32 +16,32 @@ export default function CardTable({ title, columns, data }) {
           </div>
         </div>
 
-        {/* START: Redesigned Filters Section */}
-        <div className="px-6 py-4 border-t border-b border-blueGray-200 bg-blueGray-50">
+        {/* START: Professionally Styled Filters Section */}
+        <div className="px-6 py-4 border-t border-b border-blueGray-200 bg-white">
           <div className="flex flex-wrap items-center justify-between">
             
-            {/* Filters Group */}
-            <div className="flex flex-wrap items-center gap-4">
+            {/* Filters Group with proper spacing */}
+            <div className="flex flex-wrap items-center gap-x-6 gap-y-4">
               {/* Date Filter */}
               <div className="flex items-center">
-                <label className="text-sm font-bold text-blueGray-500 mr-2">Date:</label>
+                <label className="text-sm font-bold text-blueGray-500 mr-3">Date:</label>
                 <input 
                   type="text" 
                   placeholder="mm/dd/yyyy"
-                  className="border-gray-300 rounded-md shadow-sm p-2 text-sm" 
+                  className="border-0 px-3 py-2 placeholder-blueGray-300 text-blueGray-600 bg-white rounded-md text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                 />
               </div>
               {/* Employee Filter */}
               <div className="flex items-center">
-                <label className="text-sm font-bold text-blueGray-500 mr-2">Employee:</label>
-                <select className="border-gray-300 rounded-md shadow-sm p-2 text-sm pr-8">
+                <label className="text-sm font-bold text-blueGray-500 mr-3">Employee:</label>
+                <select className="border-0 px-3 py-2 placeholder-blueGray-300 text-blueGray-600 bg-white rounded-md text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150">
                   <option>All Employees</option>
                 </select>
               </div>
               {/* Department Filter */}
               <div className="flex items-center">
-                <label className="text-sm font-bold text-blueGray-500 mr-2">Department:</label>
-                <select className="border-gray-300 rounded-md shadow-sm p-2 text-sm pr-8">
+                <label className="text-sm font-bold text-blueGray-500 mr-3">Department:</label>
+                <select className="border-0 px-3 py-2 placeholder-blueGray-300 text-blueGray-600 bg-white rounded-md text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150">
                   <option>All Departments</option>
                 </select>
               </div>
@@ -59,7 +59,7 @@ export default function CardTable({ title, columns, data }) {
 
           </div>
         </div>
-        {/* END: Redesigned Filters Section */}
+        {/* END: Professionally Styled Filters Section */}
 
         {/* Table Section */}
         <div className="block w-full overflow-x-auto">
