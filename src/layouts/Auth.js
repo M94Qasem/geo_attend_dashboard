@@ -3,8 +3,9 @@ import { Switch, Route, Redirect } from "react-router-dom";
 
 // components
 
-import Navbar from "components/Navbars/AuthNavbar.js";
-import FooterSmall from "components/Footers/FooterSmall.js";
+// FIX: Commented out the imports for the deleted components
+// import Navbar from "components/Navbars/AuthNavbar.js";
+// import FooterSmall from "components/Footers/FooterSmall.js";
 
 // views
 
@@ -14,7 +15,8 @@ import Register from "views/auth/Register.js";
 export default function Auth() {
   return (
     <>
-      <Navbar transparent />
+      {/* FIX: Commented out the Navbar component */}
+      {/* <Navbar transparent /> */}
       <main>
         <section className="relative w-full h-full py-40 min-h-screen">
           <div
@@ -29,7 +31,8 @@ export default function Auth() {
             <Route path="/auth/register" exact component={Register} />
             <Redirect from="/auth" to="/auth/login" />
           </Switch>
-          <FooterSmall absolute />
+          {/* FIX: Commented out the FooterSmall component */}
+          {/* <FooterSmall absolute /> */}
         </section>
       </main>
     </>
