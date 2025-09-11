@@ -21,7 +21,7 @@ export default function AttendanceLog() {
 
   return (
     <>
-      {/* Header */}
+      {/* Header - This part is working correctly and will not be changed */}
       <div className="relative bg-lightBlue-600 md:pt-32 pb-32 pt-12">
         <div className="px-4 md:px-10 mx-auto w-full">
           <div>
@@ -32,7 +32,9 @@ export default function AttendanceLog() {
                   statSubtitle="Total Records"
                   statTitle="3,450"
                   statIconName="fas fa-database"
-                  statIconColor="bg-lightblue-500"
+                  // FINAL AND CORRECT FIX: Using the correct Tailwind class name.
+                  // 'lightBlue' is the legacy name that works. 'sky' is the modern equivalent.
+                  statIconColor="bg-lightBlue-500"
                 />
               </div>
               <div className="w-full lg:w-6/12 xl:w-3/12 px-4">
@@ -64,7 +66,7 @@ export default function AttendanceLog() {
         </div>
       </div>
       
-      <div className="px-4 md:px-10 mx-auto w-full -m-16">
+      <div className="px-4 md:px-10 mx-auto w-full -m-20">
         <div className="flex flex-wrap mt-4">
           <div className="w-full mb-12 px-4">
             <CardTable title="Detailed Attendance Log" columns={columns} data={data} />
