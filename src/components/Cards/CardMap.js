@@ -3,8 +3,7 @@ import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from 'leaflet';
 
-// This is a fix for a known issue with react-leaflet where the default marker icon doesn't show up.
-// We are manually importing the marker icon.
+// Fix for the default marker icon issue in react-leaflet
 delete L.Icon.Default.prototype._getIconUrl;
 L.Icon.Default.mergeOptions({
   iconRetinaUrl: require('leaflet/dist/images/marker-icon-2x.png'),
@@ -13,8 +12,8 @@ L.Icon.Default.mergeOptions({
 });
 
 export default function CardMap() {
-  // UPDATED: Set the initial position to Sabha, Libya
-  const position = [27.0377, 14.4283];
+  // UPDATED: Set the position to Zallaf Company in Sabha, Libya
+  const position = [27.0183, 14.4607];
 
   return (
     <>
@@ -31,17 +30,16 @@ export default function CardMap() {
         <div className="p-4">
           {/* Map Container */}
           <div className="relative h-500-px">
-            <MapContainer center={position} zoom={13} style={{ height: "100%", width: "100%" }}>
+            <MapContainer center={position} zoom={15} style={{ height: "100%", width: "100%" }}>
               <TileLayer
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
               />
-              {/* Example Marker */}
+              {/* Example Marker for the company */}
               <Marker position={position}>
                 <Popup>
-                  {/* UPDATED: Popup text to reflect the new location */}
-                  Head Office   
- Sabha, Libya.
+                  {/* UPDATED: Popup text to reflect the company name */}
+                  Zallaf Libya Oil & Gas Co.
                 </Popup>
               </Marker>
             </MapContainer>

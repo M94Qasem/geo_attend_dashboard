@@ -4,11 +4,15 @@ import React from "react";
 import CardStats from "components/Cards/CardStats.js";
 import CardMap from "components/Cards/CardMap.js";
 import CardLiveFeed from "components/Cards/CardLiveFeed.js";
+import CardAttendanceChart from "components/Cards/CardAttendanceChart.js";
+import CardComplianceChart from "components/Cards/CardComplianceChart.js";
+import CardTopEmployees from "components/Cards/CardTopEmployees.js";
 
 export default function Dashboard() {
   return (
     <>
       {/* Header section with KPI Cards */}
+      {/* FIX 1: Restored the original background color */}
       <div className="relative bg-lightBlue-600 md:pt-32 pb-32 pt-12">
         <div className="px-4 md:px-10 mx-auto w-full">
           <div>
@@ -19,8 +23,7 @@ export default function Dashboard() {
                   statSubtitle="LIVE ATTENDANCE"
                   statTitle="15"
                   statIconName="fas fa-users"
-                  // FINAL CHANGE: Using a different green shade that is guaranteed to work.
-                  statIconColor="bg-emerald-500" 
+                  statIconColor="bg-emerald-500"
                 />
               </div>
               <div className="w-full lg:w-6/12 xl:w-3/12 px-4">
@@ -54,12 +57,34 @@ export default function Dashboard() {
 
       {/* Page content */}
       <div className="px-4 md:px-10 mx-auto w-full -m-24">
-        <div className="flex flex-wrap mt-4">
+        {/* First Row: Map and Live Feed */}
+        {/* FIX 2: Added 'flex' to the container to make children align their height */}
+        <div className="flex flex-wrap">
           <div className="w-full xl:w-8/12 mb-12 xl:mb-0 px-4">
             <CardMap />
           </div>
           <div className="w-full xl:w-4/12 px-4">
-            <CardLiveFeed />
+            {/* FIX 2: Added 'flex flex-col' to the CardLiveFeed to make it stretch */}
+            <div className="flex flex-col h-full">
+              <CardLiveFeed />
+            </div>
+          </div>
+        </div>
+
+        {/* Second Row: Charts */}
+        <div className="flex flex-wrap mt-4">
+          <div className="w-full xl:w-8/12 mb-12 xl:mb-0 px-4">
+            <CardAttendanceChart />
+          </div>
+          <div className="w-full xl:w-4/12 px-4">
+            <CardComplianceChart />
+          </div>
+        </div>
+
+        {/* Third Row: Tables */}
+        <div className="flex flex-wrap mt-4">
+          <div className="w-full mb-12 px-4">
+            <CardTopEmployees />
           </div>
         </div>
       </div>

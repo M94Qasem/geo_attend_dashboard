@@ -4,7 +4,8 @@ import { Switch, Route, Redirect } from "react-router-dom";
 // components
 import AdminNavbar from "components/Navbars/AdminNavbar.js";
 import Sidebar from "components/Sidebar/Sidebar.js";
-import FooterAdmin from "components/Footers/FooterAdmin.js";
+// FooterAdmin is no longer needed for the main layout
+// import FooterAdmin from "components/Footers/FooterAdmin.js"; 
 
 // views
 import Dashboard from "views/admin/Dashboard.js";
@@ -18,7 +19,6 @@ export default function Admin() {
       <Sidebar />
       <div className="relative md:ml-64 bg-blueGray-100 min-h-screen">
         <AdminNavbar />
-        {/* HeaderStats component removed from here to prevent duplicate cards */}
         <div className="w-full mx-auto">
           <Switch>
             <Route path="/admin/dashboard" exact component={Dashboard} />
@@ -27,7 +27,6 @@ export default function Admin() {
             <Route path="/admin/tables" exact component={Tables} />
             <Redirect from="/admin" to="/admin/dashboard" />
           </Switch>
-          <FooterAdmin />
         </div>
       </div>
     </>
