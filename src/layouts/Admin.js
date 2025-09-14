@@ -16,8 +16,11 @@ export default function Admin() {
   return (
     <>
       <Sidebar />
-      <div className="relative md:ml-64 bg-blueGray-100 min-h-screen">
+      {/* FIX: Replaced 'blueGray' with 'slate' for v3 compatibility */}
+      <div className="relative md:ml-64 bg-slate-100 min-h-screen">
         <AdminNavbar />
+        {/* The header is now part of each page (Dashboard, AttendanceLog, etc.) */}
+        {/* The content of each page will be rendered here */}
         <div className="w-full mx-auto">
           <Switch>
             <Route path="/admin/dashboard" exact component={Dashboard} />

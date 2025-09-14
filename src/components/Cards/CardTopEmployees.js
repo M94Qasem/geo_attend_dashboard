@@ -1,4 +1,3 @@
-// Create this new file in: src/components/Cards/CardTopEmployees.js
 import React from "react";
 
 export default function CardTopEmployees() {
@@ -8,7 +7,8 @@ export default function CardTopEmployees() {
         <div className="rounded-t mb-0 px-4 py-3 border-0">
           <div className="flex flex-wrap items-center">
             <div className="relative w-full px-4 max-w-full flex-grow flex-1">
-              <h3 className="font-semibold text-base text-blueGray-700">
+              {/* FIX: Replaced 'blueGray' with 'slate' for v3 compatibility */}
+              <h3 className="font-semibold text-base text-slate-700">
                 Top 5 Punctual Employees
               </h3>
             </div>
@@ -26,13 +26,14 @@ export default function CardTopEmployees() {
           <table className="items-center w-full bg-transparent border-collapse">
             <thead>
               <tr>
-                <th className="px-6 bg-blueGray-50 text-blueGray-500 align-middle border py-3 text-xs uppercase whitespace-nowrap font-semibold text-left">
+                {/* FIX: Replaced 'blueGray' with 'slate' in all th classNames */}
+                <th className="px-6 bg-slate-50 text-slate-500 align-middle border py-3 text-xs uppercase whitespace-nowrap font-semibold text-left">
                   Employee
                 </th>
-                <th className="px-6 bg-blueGray-50 text-blueGray-500 align-middle border py-3 text-xs uppercase whitespace-nowrap font-semibold text-left">
+                <th className="px-6 bg-slate-50 text-slate-500 align-middle border py-3 text-xs uppercase whitespace-nowrap font-semibold text-left">
                   Department
                 </th>
-                <th className="px-6 bg-blueGray-50 text-blueGray-500 align-middle border py-3 text-xs uppercase whitespace-nowrap font-semibold text-left">
+                <th className="px-6 bg-slate-50 text-slate-500 align-middle border py-3 text-xs uppercase whitespace-nowrap font-semibold text-left">
                   On-time Percentage
                 </th>
               </tr>

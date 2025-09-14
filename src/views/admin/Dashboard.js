@@ -11,8 +11,8 @@ import CardTopEmployees from "components/Cards/CardTopEmployees.js";
 export default function Dashboard() {
   return (
     <>
-      {/* Header section with KPI Cards */}
-      <div className="relative bg-lightBlue-600 md:pt-32 pb-32 pt-12">
+      {/* Header section - FIX: Replaced 'lightBlue' with 'sky' for Tailwind v3 compatibility */}
+      <div className="relative bg-sky-600 md:pt-32 pb-32 pt-12">
         <div className="px-4 md:px-10 mx-auto w-full">
           <div>
             {/* Card stats row */}
@@ -59,7 +59,7 @@ export default function Dashboard() {
         {/* === NEW LAYOUT ORDER === */}
 
         {/* First Row: Charts */}
-        <div className="flex flex-wrap">
+        <div className="flex flex-wrap mt-4">
           <div className="w-full xl:w-8/12 mb-12 xl:mb-0 px-4">
             <CardAttendanceChart />
           </div>

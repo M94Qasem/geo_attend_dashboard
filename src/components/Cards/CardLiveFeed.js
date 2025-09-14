@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 
 // This component was originally CardPageVisits, now repurposed for our needs.
 export default function CardLiveFeed() {
@@ -13,7 +12,8 @@ export default function CardLiveFeed() {
         <div className="rounded-t mb-0 px-4 py-3 border-0">
           <div className="flex flex-wrap items-center">
             <div className="relative w-full px-4 max-w-full flex-grow flex-1">
-              <h3 className="font-semibold text-base text-blueGray-700">
+              {/* FIX: Replaced 'blueGray' with 'slate' for v3 compatibility */}
+              <h3 className="font-semibold text-base text-slate-700">
                 Live Attendance Feed
               </h3>
             </div>
@@ -32,14 +32,14 @@ export default function CardLiveFeed() {
           <table className="items-center w-full bg-transparent border-collapse">
             <thead>
               <tr>
-                {/* Simplified classNames for table headers */}
-                <th className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100">
+                {/* FIX: Replaced 'blueGray' with 'slate' in all th classNames */}
+                <th className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-slate-50 text-slate-500 border-slate-100">
                   Employee
                 </th>
-                <th className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100">
+                <th className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-slate-50 text-slate-500 border-slate-100">
                   Check-in Time
                 </th>
-                <th className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100">
+                <th className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-slate-50 text-slate-500 border-slate-100">
                   Location
                 </th>
               </tr>
@@ -89,4 +89,3 @@ export default function CardLiveFeed() {
   );
 }
 
-// We no longer need propTypes or defaultProps for color

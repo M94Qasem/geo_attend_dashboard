@@ -20,8 +20,9 @@ export default function Sidebar() {
             <i className="fas fa-bars"></i>
           </button>
           {/* Brand */}
+          {/* FIX: Replaced 'blueGray' with 'slate' */}
           <Link
-            className="md:block text-left md:pb-2 text-blueGray-600 mr-0 inline-block whitespace-nowrap text-sm uppercase font-bold p-4 px-0"
+            className="md:block text-left md:pb-2 text-slate-600 mr-0 inline-block whitespace-nowrap text-sm uppercase font-bold p-4 px-0"
             to="/"
           >
             Geo-Attend
@@ -43,11 +44,12 @@ export default function Sidebar() {
             }
           >
             {/* Collapse header */}
-            <div className="md:min-w-full md:hidden block pb-4 mb-4 border-b border-solid border-blueGray-200">
+            {/* FIX: Replaced 'blueGray' with 'slate' */}
+            <div className="md:min-w-full md:hidden block pb-4 mb-4 border-b border-solid border-slate-200">
               <div className="flex flex-wrap">
                 <div className="w-6/12">
                   <Link
-                    className="md:block text-left md:pb-2 text-blueGray-600 mr-0 inline-block whitespace-nowrap text-sm uppercase font-bold p-4 px-0"
+                    className="md:block text-left md:pb-2 text-slate-600 mr-0 inline-block whitespace-nowrap text-sm uppercase font-bold p-4 px-0"
                     to="/"
                   >
                     Geo-Attend
@@ -67,10 +69,11 @@ export default function Sidebar() {
             {/* Form */}
             <form className="mt-6 mb-4 md:hidden">
               <div className="mb-3 pt-0">
+                {/* FIX: Replaced 'blueGray' with 'slate' */}
                 <input
                   type="text"
                   placeholder="Search"
-                  className="border-0 px-3 py-2 h-12 border-solid  border-blueGray-500 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-base leading-snug shadow-none outline-none focus:outline-none w-full font-normal"
+                  className="border-0 px-3 py-2 h-12 border-solid border-slate-500 placeholder-slate-300 text-slate-600 bg-white rounded text-base leading-snug shadow-none outline-none focus:outline-none w-full font-normal"
                 />
               </div>
             </form>
@@ -78,19 +81,21 @@ export default function Sidebar() {
             {/* Divider */}
             <hr className="my-4 md:min-w-full" />
             {/* Heading */}
-            <h6 className="md:min-w-full text-blueGray-500 text-xs uppercase font-bold block pt-1 pb-4 no-underline">
+            {/* FIX: Replaced 'blueGray' with 'slate' */}
+            <h6 className="md:min-w-full text-slate-500 text-xs uppercase font-bold block pt-1 pb-4 no-underline">
               Main Menu
             </h6>
             {/* Navigation */}
 
             <ul className="md:flex-col md:min-w-full flex flex-col list-none">
               <li className="items-center">
+                {/* FIX: Replaced 'lightBlue' with 'sky' and 'blueGray' with 'slate' */}
                 <Link
                   className={
                     "text-xs uppercase py-3 font-bold block " +
                     (window.location.href.indexOf("/admin/dashboard") !== -1
-                      ? "text-lightBlue-500 hover:text-lightBlue-600"
-                      : "text-blueGray-700 hover:text-blueGray-500")
+                      ? "text-sky-500 hover:text-sky-600"
+                      : "text-slate-700 hover:text-slate-500")
                   }
                   to="/admin/dashboard"
                 >
@@ -99,7 +104,7 @@ export default function Sidebar() {
                       "fas fa-tv mr-2 text-sm " +
                       (window.location.href.indexOf("/admin/dashboard") !== -1
                         ? "opacity-75"
-                        : "text-blueGray-300")
+                        : "text-slate-300")
                     }
                   ></i>{" "}
                   Dashboard
@@ -108,12 +113,13 @@ export default function Sidebar() {
 
               {/* UPDATED: Link for Attendance Log */}
               <li className="items-center">
+                {/* FIX: Replaced 'lightBlue' with 'sky' and 'blueGray' with 'slate' */}
                 <Link
                   className={
                     "text-xs uppercase py-3 font-bold block " +
                     (window.location.href.indexOf("/admin/attendance-log") !== -1
-                      ? "text-lightBlue-500 hover:text-lightBlue-600"
-                      : "text-blueGray-700 hover:text-blueGray-500")
+                      ? "text-sky-500 hover:text-sky-600"
+                      : "text-slate-700 hover:text-slate-500")
                   }
                   to="/admin/attendance-log"
                 >
@@ -122,7 +128,7 @@ export default function Sidebar() {
                       "fas fa-clipboard-list mr-2 text-sm " +
                       (window.location.href.indexOf("/admin/attendance-log") !== -1
                         ? "opacity-75"
-                        : "text-blueGray-300")
+                        : "text-slate-300")
                     }
                   ></i>{" "}
                   Attendance Log
@@ -130,12 +136,13 @@ export default function Sidebar() {
               </li>
 
               <li className="items-center">
+                {/* FIX: Replaced 'lightBlue' with 'sky' and 'blueGray' with 'slate' */}
                 <Link
                   className={
                     "text-xs uppercase py-3 font-bold block " +
                     (window.location.href.indexOf("/admin/analytics") !== -1
-                      ? "text-lightBlue-500 hover:text-lightBlue-600"
-                      : "text-blueGray-700 hover:text-blueGray-500")
+                      ? "text-sky-500 hover:text-sky-600"
+                      : "text-slate-700 hover:text-slate-500")
                   }
                   to="/admin/analytics"
                 >
@@ -144,7 +151,7 @@ export default function Sidebar() {
                       "fas fa-chart-bar mr-2 text-sm " +
                       (window.location.href.indexOf("/admin/analytics") !== -1
                         ? "opacity-75"
-                        : "text-blueGray-300")
+                        : "text-slate-300")
                     }
                   ></i>{" "}
                   Analytics & Reports
@@ -152,12 +159,13 @@ export default function Sidebar() {
               </li>
 
               <li className="items-center">
+                {/* FIX: Replaced 'lightBlue' with 'sky' and 'blueGray' with 'slate' */}
                 <Link
                   className={
                     "text-xs uppercase py-3 font-bold block " +
                     (window.location.href.indexOf("/admin/management") !== -1
-                      ? "text-lightBlue-500 hover:text-lightBlue-600"
-                      : "text-blueGray-700 hover:text-blueGray-500")
+                      ? "text-sky-500 hover:text-sky-600"
+                      : "text-slate-700 hover:text-slate-500")
                   }
                   to="/admin/management"
                 >
@@ -166,7 +174,7 @@ export default function Sidebar() {
                       "fas fa-cogs mr-2 text-sm " +
                       (window.location.href.indexOf("/admin/management") !== -1
                         ? "opacity-75"
-                        : "text-blueGray-300")
+                        : "text-slate-300")
                     }
                   ></i>{" "}
                   Management

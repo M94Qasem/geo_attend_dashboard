@@ -1,37 +1,25 @@
 const plugin = require("tailwindcss/plugin");
-const colors = require("tailwindcss/colors");
 
 module.exports = {
-  content: {
-    files: [
-      "./src/**/*.js",
-      "./src/**/*.jsx",
-      "./public/index.html",
-    ],
-    safelist: [
-      // --- Common Colors ---
-      'bg-sky-600',       // Main header background
-      'bg-blueGray-100',   // Page background
-      'bg-emerald-500',
-      'bg-orange-500',
-      'bg-red-500',
-      'bg-yellow-500',
-      'bg-indigo-500',
-      'text-sky-500',      // Active sidebar links
-      'hover:text-sky-600',
-      'bg-blueGray-700',   // Dark chart background
-      'bg-blue-500',       // For "Total Records" card icon
-    ],
-  },
+  // المسارات التي تخبر Tailwind أين يبحث عن الكلاسات
+  content: [
+    "./src/**/*.js",
+    "./src/**/*.jsx",
+    "./public/index.html",
+  ],
+
+  safelist: [
+    'text-emerald-500',
+    'text-orange-500',
+    'text-yellow-500',
+    'text-red-500',
+    // You can add more status colors here in the future
+  ],
+
   theme: {
-    // By defining `colors` here, we are replacing the default palette.
-    // This is correct as we are spreading the full `colors` object.
-    colors: {
-      ...colors,
-    },
-    // The `extend` block is for adding custom utilities without removing the defaults.
-    // Your original `extend` block is perfect.
+    // استخدم `extend` لإضافة أو تعديل الكلاسات دون حذف الإعدادات الافتراضية
     extend: {
+      // كل التخصيصات الخاصة بك محفوظة هنا
       minHeight: { "screen-75": "75vh" },
       fontSize: { 55: "55rem" },
       opacity: { 80: ".8" },
@@ -57,22 +45,12 @@ module.exports = {
       backgroundSize: { full: "100%" },
     },
   },
-  variants: [
-    "responsive", "group-hover", "focus-within", "first", "last",
-    "odd", "even", "hover", "focus", "active", "visited", "disabled",
-  ],
+
+  // لا حاجة لقسم `variants` في v3
+  // لا حاجة لـ plugin الـ container المخصص في v3
+
   plugins: [
+    // إضافة النماذج ضرورية لتنسيق حقول الإدخال
     require("@tailwindcss/forms"),
-    plugin(function ({ addComponents, theme }) {
-      const screens = theme("screens", {});
-      addComponents([
-        { ".container": { width: "100%" } },
-        { [`@media (min-width: ${screens.sm})`]: { ".container": { "max-width": "640px" } } },
-        { [`@media (min-width: ${screens.md})`]: { ".container": { "max-width": "768px" } } },
-        { [`@media (min-width: ${screens.lg})`]: { ".container": { "max-width": "1024px" } } },
-        { [`@media (min-width: ${screens.xl})`]: { ".container": { "max-width": "1280px" } } },
-        { [`@media (min-width: ${screens["2xl"]})`]: { ".container": { "max-width": "1280px" } } },
-      ]);
-    }),
   ],
 };

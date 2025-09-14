@@ -1,4 +1,3 @@
-// Create this new file in: src/components/Cards/CardComplianceChart.js
 import React from "react";
 import Chart from "chart.js";
 
@@ -11,7 +10,7 @@ export default function CardComplianceChart() {
         datasets: [
           {
             label: "Late",
-            backgroundColor: "#ed64a6",
+            backgroundColor: "#ed64a6", // This is a hex code, no change needed
             borderColor: "#ed64a6",
             data: [30, 78, 56, 34, 45], // Example data
             fill: false,
@@ -20,7 +19,7 @@ export default function CardComplianceChart() {
           {
             label: "Absent",
             fill: false,
-            backgroundColor: "#4c51bf",
+            backgroundColor: "#4c51bf", // This is a hex code, no change needed
             borderColor: "#4c51bf",
             data: [27, 68, 86, 74, 10], // Example data
             barThickness: 8,
@@ -63,10 +62,12 @@ export default function CardComplianceChart() {
         <div className="rounded-t mb-0 px-4 py-3 bg-transparent">
           <div className="flex flex-wrap items-center">
             <div className="relative w-full max-w-full flex-grow flex-1">
-              <h6 className="uppercase text-blueGray-400 mb-1 text-xs font-semibold">
+              {/* FIX: Replaced 'blueGray' with 'slate' for v3 compatibility */}
+              <h6 className="uppercase text-slate-400 mb-1 text-xs font-semibold">
                 Compliance
               </h6>
-              <h2 className="text-blueGray-700 text-xl font-semibold">
+              {/* FIX: Replaced 'blueGray' with 'slate' */}
+              <h2 className="text-slate-700 text-xl font-semibold">
                 Issues by Department
               </h2>
             </div>
