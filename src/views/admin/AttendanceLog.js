@@ -66,7 +66,7 @@ export default function AttendanceLog() {
         </div>
       </div>
       
-      <div className="px-4 md:px-10 mx-auto w-full -m-20">
+      <div className="px-4 md:px-10 mx-auto w-full -m-24">
         <div className="flex flex-wrap mt-4">
           <div className="w-full mb-12 px-4">
             <CardTable title="Detailed Attendance Log" columns={columns} data={data} />
