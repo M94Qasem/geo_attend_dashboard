@@ -1,7 +1,47 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
+import DatePicker from "react-datepicker";
+
+// استيراد ملف الأنماط الخاص بمكتبة التاريخ
+import "react-datepicker/dist/react-datepicker.css";
 
 export default function CardTable({ title, columns, data }) {
+  // 1. إدارة حالة الفلاتر باستخدام useState
+  const [filters, setFilters] = useState({
+    startDate: null,
+    endDate: null,
+    employee: "all",
+    department: "all",
+  });
+
+  // 2. دالة لتحديث نطاق التاريخ
+  const handleDateChange = (dates) => {
+    const [start, end] = dates;
+    setFilters({ ...filters, startDate: start, endDate: end });
+  };
+
+  // دالة عامة لتحديث باقي حقول الإدخال
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFilters({ ...filters, [name]: value });
+  };
+
+  // 3. دوال التحكم في الفلاتر
+  const applyFilters = () => {
+    console.log("Applying Filters:", filters);
+    // الخطوة التالية: سيتم استدعاء الـ API من هنا مع إرسال كائن الفلاتر
+  };
+
+  const clearFilters = () => {
+    setFilters({
+      startDate: null,
+      endDate: null,
+      employee: "all",
+      department: "all",
+    });
+    console.log("Filters Cleared");
+  };
+
   return (
     <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded bg-white">
       
@@ -9,67 +49,82 @@ export default function CardTable({ title, columns, data }) {
       <div className="rounded-t mb-0 px-6 py-4 border-0">
         <div className="flex flex-wrap items-center">
           <div className="relative w-full max-w-full flex-grow flex-1">
-            <h3 className="font-semibold text-lg text-blueGray-700">
-              {title}
-            </h3>
+            <h3 className="font-semibold text-lg text-blueGray-700">{title}</h3>
           </div>
         </div>
       </div>
 
-      {/* --- Filters Section --- */}
+      {/* --- قسم الفلاتر التفاعلي مع المسافات الصحيحة --- */}
       <div className="px-6 py-4 border-t border-b border-blueGray-200 bg-gray-50">
-        <div className="flex flex-col md:flex-row md:items-end gap-4">
+        <div className="flex flex-wrap items-end gap-4">
 
-          {/* Date Filter */}
-          <div className="flex flex-col w-full md:w-1/4">
-            <label className="text-sm font-medium text-gray-600 mb-1">
-              Date
-            </label>
-            <input
-              type="text"
-              placeholder="mm/dd/yyyy"
+          {/* فلتر نطاق التاريخ */}
+          <div className="flex flex-col flex-grow min-w-[200px]">
+            <label className="text-sm font-medium text-gray-600 mb-1">Date Range</label>
+            <DatePicker
+              selectsRange={true}
+              startDate={filters.startDate}
+              endDate={filters.endDate}
+              onChange={handleDateChange}
+              isClearable={true}
+              placeholderText="Select date range"
               className="border border-gray-300 px-3 py-2 rounded-lg text-gray-700 text-sm 
-                         focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-sm"
+                         focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-sm w-full"
             />
           </div>
 
-          {/* Employee Filter */}
-          <div className="flex flex-col w-full md:w-1/4">
-            <label className="text-sm font-medium text-gray-600 mb-1">
-              Employee
-            </label>
-            <select className="border border-gray-300 px-3 py-2 rounded-lg text-gray-700 text-sm 
-                               focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-sm">
-              <option>All Employees</option>
+          {/* فلتر الموظف */}
+          <div className="flex flex-col flex-grow min-w-[180px]">
+            <label className="text-sm font-medium text-gray-600 mb-1">Employee</label>
+            <select 
+              name="employee"
+              value={filters.employee}
+              onChange={handleInputChange}
+              className="border border-gray-300 px-3 py-2 rounded-lg text-gray-700 text-sm 
+                         focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-sm">
+              <option value="all">All Employees</option>
+              {/* سيتم ملء هذه الخيارات من الـ API لاحقاً */}
             </select>
           </div>
 
-          {/* Department Filter */}
-          <div className="flex flex-col w-full md:w-1/4">
-            <label className="text-sm font-medium text-gray-600 mb-1">
-              Department
-            </label>
-            <select className="border border-gray-300 px-3 py-2 rounded-lg text-gray-700 text-sm 
-                               focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-sm">
-              <option>All Departments</option>
+          {/* فلتر القسم */}
+          <div className="flex flex-col flex-grow min-w-[180px]">
+            <label className="text-sm font-medium text-gray-600 mb-1">Department</label>
+            <select 
+              name="department"
+              value={filters.department}
+              onChange={handleInputChange}
+              className="border border-gray-300 px-3 py-2 rounded-lg text-gray-700 text-sm 
+                         focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-sm">
+              <option value="all">All Departments</option>
+              {/* سيتم ملء هذه الخيارات من الـ API لاحقاً */}
             </select>
           </div>
 
-          {/* Export Button */}
-          <div className="flex w-full md:w-auto justify-start md:justify-end">
+          {/* أزرار الإجراءات */}
+          <div className="flex gap-2">
             <button
-              className="bg-indigo-500 hover:bg-indigo-700 text-white font-semibold px-6 py-2 
-                         rounded-lg shadow transition-all duration-200"
+              className="bg-indigo-500 hover:bg-indigo-600 text-white font-semibold px-4 py-2 
+                         rounded-lg shadow-sm transition-all duration-200 text-sm"
               type="button"
+              onClick={applyFilters}
             >
-              Export
+              Apply
+            </button>
+            <button
+              className="bg-gray-500 hover:bg-gray-600 text-white font-semibold px-4 py-2 
+                         rounded-lg shadow-sm transition-all duration-200 text-sm"
+              type="button"
+              onClick={clearFilters}
+            >
+              Clear
             </button>
           </div>
         </div>
       </div>
-      {/* --- End Filters Section --- */}
+      {/* --- نهاية قسم الفلاتر --- */}
 
-      {/* Table Section */}
+      {/* قسم الجدول */}
       <div className="block w-full overflow-x-auto">
         <table className="items-center w-full bg-transparent border-collapse">
           <thead>
