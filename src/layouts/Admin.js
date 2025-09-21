@@ -10,7 +10,8 @@ import Dashboard from "views/admin/Dashboard.js";
 import Maps from "views/admin/Maps.js";
 import Settings from "views/admin/Settings.js";
 import AttendanceLog from "views/admin/AttendanceLog.js"; 
-import Management from "views/admin/Management.js"; // <-- 1. أضف هذا السطر
+import Management from "views/admin/Management.js";
+import Analytics from "views/admin/Analytics.js"; 
 
 export default function Admin() {
   return (
@@ -22,7 +23,8 @@ export default function Admin() {
           <Switch>
             <Route path="/admin/dashboard" exact component={Dashboard} />
             <Route path="/admin/attendance-log" exact component={AttendanceLog} />
-            <Route path="/admin/management" exact component={Management} /> {/* <-- 2. أضف هذا السطر */}
+            <Route path="/admin/management" exact component={Management} />
+            <Route path="/admin/analytics" exact component={Analytics} />
             <Route path="/admin/maps" exact component={Maps} />
             <Route path="/admin/settings" exact component={Settings} />
             <Redirect from="/admin" to="/admin/dashboard" />
