@@ -1,161 +1,120 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import DatePicker from "react-datepicker";
-import Button from "../Elements/Button";
-import { FaCircle } from "react-icons/fa";
-import "react-datepicker/dist/react-datepicker.css";
+import {
+  useReactTable,
+  getCoreRowModel,
+  getPaginationRowModel,
+  getSortedRowModel,
+  flexRender,
+} from "@tanstack/react-table";
+import { FaSort, FaSortUp, FaSortDown } from "react-icons/fa";
 
-export default function CardTable({ title, columns, data }) {
-  const [filters, setFilters] = useState({
-    startDate: null,
-    endDate: null,
-    employee: "all",
-    department: "all",
+export default function CardTable({ color, data, columns }) {
+  const [sorting, setSorting] = useState([]);
+
+  // 1. استخدام useReactTable مع البيانات والأعمدة التي يتم تمريرها كـ props
+  const table = useReactTable({
+    data,
+    columns,
+    state: {
+      sorting,
+    },
+    onSortingChange: setSorting,
+    getCoreRowModel: getCoreRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
+    getSortedRowModel: getSortedRowModel(),
+    // يمكنك ضبط حجم الصفحة الافتراضي هنا
+    initialState: {
+        pagination: {
+            pageSize: 8,
+        },
+    },
   });
 
-  const handleDateChange = (dates) => {
-    const [start, end] = dates;
-    setFilters({ ...filters, startDate: start, endDate: end });
-  };
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFilters({ ...filters, [name]: value });
-  };
-
-  const applyFilters = () => {
-    console.log("Applying Filters:", filters);
-  };
-
-  const clearFilters = () => {
-    setFilters({
-      startDate: null,
-      endDate: null,
-      employee: "all",
-      department: "all",
-    });
-    console.log("Filters Cleared");
-  };
-
-  const customArrow = `url("data:image/svg+xml,%3Csvg viewBox='0 0 20 20' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M6 8L10 12L14 8' stroke='%236B7280' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E" )`;
-
   return (
-    <div className="relative flex flex-col min-w-0 w-full mb-6 shadow-lg rounded-lg bg-white overflow-hidden">
-      
-      {/* FIX: Reverted to a simpler, more consistent header style */}
-      <div className="rounded-t mb-0 px-6 py-4 border-b">
-        <h3 className="font-semibold text-lg text-slate-700">{title}</h3>
+    <div
+      className={
+        "relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded " +
+        (color === "light" ? "bg-white" : "bg-slate-700 text-white")
+      }
+    >
+      <div className="rounded-t mb-0 px-4 py-3 border-0">
+        <h3 className={"font-semibold text-lg " + (color === "light" ? "text-slate-700" : "text-white")}>
+          Attendance Records
+        </h3>
       </div>
-
-      {/* Filters Section - This part is now working perfectly */}
-      <div className="px-6 py-5 border-b border-slate-200 bg-slate-50">
-        <div className="flex flex-wrap items-end gap-4">
-          
-          <div className="flex flex-col">
-            <label className="text-sm font-medium text-gray-700 mb-2">Date Range</label>
-            <DatePicker
-              selectsRange={true}
-              startDate={filters.startDate}
-              endDate={filters.endDate}
-              onChange={handleDateChange}
-              isClearable={true}
-              placeholderText="Select date range"
-              className="border border-gray-300 px-4 py-2 rounded-lg text-gray-700 text-sm 
-                         focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-sm w-52"
-            />
-          </div>
-
-          <div className="flex flex-col">
-            <label className="text-sm font-medium text-gray-700 mb-2">Employee</label>
-            <select
-              name="employee"
-              value={filters.employee}
-              onChange={handleInputChange}
-              className="appearance-none border border-gray-300 bg-white px-4 py-2 pr-10 rounded-lg text-gray-700 text-sm 
-                         focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-sm w-44 bg-no-repeat"
-              style={{ backgroundImage: customArrow, backgroundPosition: 'right 0.5rem center', backgroundSize: '1.5em 1.5em' }}
-            >
-              <option value="all">All Employees</option>
-            </select>
-          </div>
-
-          <div className="flex flex-col">
-            <label className="text-sm font-medium text-gray-700 mb-2">Department</label>
-            <select
-              name="department"
-              value={filters.department}
-              onChange={handleInputChange}
-              className="appearance-none border border-gray-300 bg-white px-4 py-2 pr-10 rounded-lg text-gray-700 text-sm 
-                         focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-sm w-44 bg-no-repeat"
-              style={{ backgroundImage: customArrow, backgroundPosition: 'right 0.5rem center', backgroundSize: '1.5em 1.5em' }}
-            >
-              <option value="all">All Departments</option>
-            </select>
-          </div>
-
-          <div className="flex gap-3 ml-auto">
-            <Button onClick={applyFilters} variant="primary">
-              Apply
-            </Button>
-            <Button onClick={clearFilters} variant="secondary">
-              Clear
-            </Button>
-          </div>
-        </div>
-      </div>
-
-      {/* Table Section */}
       <div className="block w-full overflow-x-auto">
-        <table className="items-center w-full border-collapse">
-          <thead>
-            <tr>
-              {columns.map((column, index) => (
-                <th
-                  key={index}
-                  className="px-6 py-3 border-b text-xs uppercase font-semibold text-left bg-slate-50 text-slate-600"
-                >
-                  {column}
-                </th>
-              ))}
-            </tr>
+        {/* 2. بناء الجدول بشكل ديناميكي باستخدام flexRender */}
+        <table className="items-center w-full bg-transparent border-collapse">
+          <thead className="sticky top-0">
+            {table.getHeaderGroups().map(headerGroup => (
+              <tr key={headerGroup.id}>
+                {headerGroup.headers.map(header => (
+                  <th
+                    key={header.id}
+                    className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-slate-50 text-slate-500 border-slate-100 dark:bg-slate-600 dark:text-slate-200 dark:border-slate-500"
+                  >
+                    {/* 3. تفعيل الفرز عند النقر على رأس العمود */}
+                    <div
+                      {...{
+                        className: header.column.getCanSort() ? 'cursor-pointer select-none flex items-center gap-2' : 'flex items-center gap-2',
+                        onClick: header.column.getToggleSortingHandler(),
+                      }}
+                    >
+                      {flexRender(header.column.columnDef.header, header.getContext())}
+                      {{
+                        asc: <FaSortUp />,
+                        desc: <FaSortDown />,
+                      }[header.column.getIsSorted()] ?? (header.column.getCanSort() ? <FaSort className="opacity-30" /> : null)}
+                    </div>
+                  </th>
+                ))}
+              </tr>
+            ))}
           </thead>
           <tbody>
-            {data.map((row, rowIndex) => (
-              <tr
-                key={rowIndex}
-                className="hover:bg-slate-50 transition-colors duration-150"
-              >
-                <td className="border-b border-slate-100 px-6 py-4 text-sm text-gray-700 whitespace-nowrap">{row.employee}</td>
-                <td className="border-b border-slate-100 px-6 py-4 text-sm text-gray-700 whitespace-nowrap">{row.department}</td>
-                <td className="border-b border-slate-100 px-6 py-4 text-sm text-gray-700 whitespace-nowrap">{row.date}</td>
-                <td className="border-b border-slate-100 px-6 py-4 text-sm text-gray-700 whitespace-nowrap">{row.checkIn}</td>
-                <td className="border-b border-slate-100 px-6 py-4 text-sm text-gray-700 whitespace-nowrap">{row.checkOut}</td>
-                <td className="border-b border-slate-100 px-6 py-4 text-sm text-gray-700 whitespace-nowrap">{row.duration}</td>
-                <td className="border-b border-slate-100 px-6 py-4 text-sm text-gray-700 whitespace-nowrap">{row.location}</td>
-                <td className="border-b border-slate-100 px-6 py-4 text-sm text-gray-700 whitespace-nowrap">
-                  <div className="flex items-center">
-                    {/* This will now work correctly because of the safelist */}
-                    <FaCircle className={`text-${row.status.color}-500 mr-2`} />
-                    {row.status.text}
-                  </div>
-                </td>
+            {table.getRowModel().rows.map(row => (
+              <tr key={row.id} className="hover:bg-gray-50 dark:hover:bg-slate-600/50 transition-colors">
+                {row.getVisibleCells().map(cell => (
+                  <td key={cell.id} className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                  </td>
+                ))}
               </tr>
             ))}
           </tbody>
         </table>
       </div>
+      {/* 4. عناصر التحكم بالترقيم (Pagination) */}
+      <div className="py-3 px-4 flex items-center justify-between flex-wrap gap-2 border-t border-solid border-slate-200 dark:border-slate-600">
+        <span className="text-sm font-medium">
+          Page{' '}
+          <strong>
+            {table.getState().pagination.pageIndex + 1} of {table.getPageCount()}
+          </strong>
+        </span>
+        <div className="flex items-center gap-2">
+          <button onClick={() => table.setPageIndex(0)} disabled={!table.getCanPreviousPage()} className="p-1 px-2 border rounded disabled:opacity-50 disabled:cursor-not-allowed transition-opacity">
+            {'<<'}
+          </button>
+          <button onClick={() => table.previousPage()} disabled={!table.getCanPreviousPage()} className="p-1 px-2 border rounded disabled:opacity-50 disabled:cursor-not-allowed transition-opacity">
+            {'<'}
+          </button>
+          <button onClick={() => table.nextPage()} disabled={!table.getCanNextPage()} className="p-1 px-2 border rounded disabled:opacity-50 disabled:cursor-not-allowed transition-opacity">
+            {'>'}
+          </button>
+          <button onClick={() => table.setPageIndex(table.getPageCount() - 1)} disabled={!table.getCanNextPage()} className="p-1 px-2 border rounded disabled:opacity-50 disabled:cursor-not-allowed transition-opacity">
+            {'>>'}
+          </button>
+        </div>
+      </div>
     </div>
   );
 }
 
-CardTable.defaultProps = {
-  title: "Attendance Records",
-  columns: [],
-  data: [],
-};
-
+// 5. تحديث propTypes ليعكس أن البيانات والأعمدة تأتي من الخارج
 CardTable.propTypes = {
-  title: PropTypes.string,
-  columns: PropTypes.arrayOf(PropTypes.string),
-  data: PropTypes.arrayOf(PropTypes.object),
+  color: PropTypes.oneOf(["light", "dark"]),
+  data: PropTypes.array.isRequired,
+  columns: PropTypes.array.isRequired,
 };
