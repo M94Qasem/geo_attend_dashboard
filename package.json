@@ -7,7 +7,7 @@
   "dependencies": {
     "@fortawesome/fontawesome-free": "5.15.3",
     "@popperjs/core": "2.9.1",
-    "chart.js": "2.9.4",
+    "chart.js": "^4.5.0",
     "gulp": "^5.0.1",
     "gulp-append-prepend": "1.0.8",
     "leaflet": "^1.9.4",
@@ -20,17 +20,17 @@
     "react-router-dom": "5.3.4",
     "react-scripts": "5.0.1"
   },
-"scripts": {
-  "start": "react-scripts start",
-  "build": "react-scripts build && gulp licenses",
-  "test": "react-scripts test",
-  "eject": "react-scripts eject",
-  "install:clean": "rm -rf node_modules/ && rm -rf package-lock.json && npm install && npm run build:tailwind && npm start",
-  "build:tailwind": "tailwindcss -i ./src/assets/styles/index.css -o ./src/assets/styles/tailwind.css --watch",
-  "dev": "concurrently \"npm run build:tailwind\" \"npm start\"",
-  "predeploy": "npm run build",
-  "deploy": "gh-pages -d build"
-},
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build && gulp licenses",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "install:clean": "rm -rf node_modules/ && rm -rf package-lock.json && npm install && npm run build:tailwind && npm start",
+    "build:tailwind": "tailwindcss -i ./src/assets/styles/index.css -o ./src/assets/styles/tailwind.css --watch",
+    "dev": "concurrently \"npm run build:tailwind\" \"npm start\"",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
+  },
   "eslintConfig": {
     "extends": "react-app"
   },

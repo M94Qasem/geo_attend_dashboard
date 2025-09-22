@@ -1,8 +1,15 @@
-import React from "react";
-import Chart from "chart.js";
+import React, { useEffect, useRef } from "react";
+// 1. استخدام الاستيراد التلقائي الذي يسجل كل شيء بأمان
+import Chart from "chart.js/auto";
 
 export default function CardMonthlyPerformanceChart() {
-  React.useEffect(() => {
+  const canvasRef = useRef(null);
+
+  useEffect(() => {
+    if (!canvasRef.current) return;
+    const ctx = canvasRef.current.getContext("2d");
+
+    // 2. إعدادات الرسم البياني المحدثة لـ Chart.js v4
     const config = {
       type: "bar",
       data: {
@@ -10,14 +17,12 @@ export default function CardMonthlyPerformanceChart() {
         datasets: [
           {
             label: "Expected Hours",
-            backgroundColor: "#a0aec0", // slate-400
-            borderColor: "#a0aec0",
+            backgroundColor: "#cbd5e1", // slate-300
+            borderColor: "#cbd5e1",
             data: [400, 400, 400, 400],
-            fill: false,
           },
           {
             label: "Logged Hours",
-            fill: false,
             backgroundColor: "#4f46e5", // indigo-600
             borderColor: "#4f46e5",
             data: [380, 395, 370, 410],
@@ -27,21 +32,49 @@ export default function CardMonthlyPerformanceChart() {
       options: {
         maintainAspectRatio: false,
         responsive: true,
-        title: { display: false },
-        tooltips: { mode: "index", intersect: false },
-        hover: { mode: "nearest", intersect: true },
-        legend: { labels: { fontColor: "rgba(0,0,0,.4)" }, align: "end", position: "bottom" },
-        scales: {
-          xAxes: [{ display: true, scaleLabel: { display: false }, gridLines: { display: false } }],
-          yAxes: [{ display: true, scaleLabel: { display: false } }],
+        plugins: { // 3. تحديث بنية الـ plugins
+          legend: {
+            position: "bottom",
+            align: "end",
+            labels: {
+              color: "rgba(0,0,0,.6)",
+            },
+          },
+          title: {
+            display: false,
+          },
+        },
+        scales: { // 4. تحديث بنية المحاور
+          x: {
+            grid: {
+              display: false,
+            },
+            ticks: {
+              color: "rgba(0,0,0,.6)",
+            },
+          },
+          y: {
+            grid: {
+              color: "rgba(0,0,0,0.05)",
+            },
+            ticks: {
+              color: "rgba(0,0,0,.6)",
+            },
+          },
         },
       },
     };
-    const ctx = document.getElementById("monthly-performance-chart").getContext("2d");
-    window.myBar = new Chart(ctx, config);
+
+    const chartInstance = new Chart(ctx, config);
+
+    return () => {
+      chartInstance.destroy();
+    };
   }, []);
+
   return (
-    <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded-lg p-4">
+    // 5. تصميم البطاقة (لا تغيير هنا)
+    <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded-lg">
       <div className="rounded-t mb-0 px-4 py-3 bg-transparent">
         <div className="flex flex-wrap items-center">
           <div className="relative w-full max-w-full flex-grow flex-1">
@@ -52,7 +85,7 @@ export default function CardMonthlyPerformanceChart() {
       </div>
       <div className="p-4 flex-auto">
         <div className="relative h-350-px">
-          <canvas id="monthly-performance-chart"></canvas>
+          <canvas ref={canvasRef}></canvas>
         </div>
       </div>
     </div>

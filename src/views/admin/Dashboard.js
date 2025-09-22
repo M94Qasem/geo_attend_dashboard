@@ -1,52 +1,52 @@
 import React from "react";
 
-// Components
+// استيراد كل المكونات
 import CardStats from "components/Cards/CardStats.js";
 import CardMap from "components/Cards/CardMap.js";
 import CardLiveFeed from "components/Cards/CardLiveFeed.js";
+import CardRecentFlags from "components/Cards/CardRecentFlags.js";
 import CardAttendanceChart from "components/Cards/CardAttendanceChart.js";
 import CardComplianceChart from "components/Cards/CardComplianceChart.js";
-import CardTopEmployees from "components/Cards/CardTopEmployees.js";
 
 export default function Dashboard() {
   return (
     <>
-      {/* Header section - FIX: Replaced 'lightBlue' with 'sky' for Tailwind v3 compatibility */}
+      {/* Header section */}
       <div className="relative bg-sky-600 md:pt-32 pb-32 pt-12">
         <div className="px-4 md:px-10 mx-auto w-full">
           <div>
-            {/* Card stats row */}
+            {/* استخدام CardStats مع Props الصحيحة */}
             <div className="flex flex-wrap">
               <div className="w-full lg:w-6/12 xl:w-3/12 px-4">
                 <CardStats
-                  statSubtitle="LIVE ATTENDANCE"
+                  statSubtitle="Live Attendance"
                   statTitle="15"
-                  statIconName="fas fa-users"
-                  statIconColor="bg-emerald-500"
+                  icon="FaUserCheck"
+                  color="emerald"
                 />
               </div>
               <div className="w-full lg:w-6/12 xl:w-3/12 px-4">
                 <CardStats
-                  statSubtitle="LATE TODAY"
+                  statSubtitle="Late Today"
                   statTitle="2"
-                  statIconName="fas fa-clock"
-                  statIconColor="bg-orange-500"
+                  icon="FaClock"
+                  color="orange"
                 />
               </div>
               <div className="w-full lg:w-6/12 xl:w-3/12 px-4">
                 <CardStats
-                  statSubtitle="ABSENT TODAY"
+                  statSubtitle="Absent Today"
                   statTitle="5"
-                  statIconName="fas fa-user-slash"
-                  statIconColor="bg-red-500"
+                  icon="FaUserSlash"
+                  color="red"
                 />
               </div>
               <div className="w-full lg:w-6/12 xl:w-3/12 px-4">
                 <CardStats
-                  statSubtitle="PENDING OVERRIDES"
+                  statSubtitle="Pending Overrides"
                   statTitle="3"
-                  statIconName="fas fa-exclamation-triangle"
-                  statIconColor="bg-yellow-500"
+                  icon="FaExclamationTriangle"
+                  color="yellow"
                 />
               </div>
             </div>
@@ -56,9 +56,8 @@ export default function Dashboard() {
 
       {/* Page content */}
       <div className="px-4 md:px-10 mx-auto w-full -m-24">
-        {/* === NEW LAYOUT ORDER === */}
-
-        {/* First Row: Charts */}
+        
+        {/* الصف الأول: الرسوم البيانية */}
         <div className="flex flex-wrap mt-4">
           <div className="w-full xl:w-8/12 mb-12 xl:mb-0 px-4">
             <CardAttendanceChart />
@@ -68,24 +67,23 @@ export default function Dashboard() {
           </div>
         </div>
 
-        {/* Second Row: Map and Live Feed */}
+        {/* الصف الثاني: الخريطة و الـ Live Feed */}
         <div className="flex flex-wrap mt-4">
           <div className="w-full xl:w-8/12 mb-12 xl:mb-0 px-4">
             <CardMap />
           </div>
           <div className="w-full xl:w-4/12 px-4">
-            <div className="flex flex-col h-full">
-              <CardLiveFeed />
-            </div>
+            <CardLiveFeed />
           </div>
         </div>
 
-        {/* Third Row: Tables */}
+        {/* الصف الثالث: الـ Recent Flags */}
         <div className="flex flex-wrap mt-4">
           <div className="w-full mb-12 px-4">
-            <CardTopEmployees />
+            <CardRecentFlags />
           </div>
         </div>
+
       </div>
     </>
   );

@@ -1,8 +1,15 @@
-import React from "react";
-import Chart from "chart.js";
+import React, { useEffect, useRef } from "react";
+// 1. استخدام الاستيراد التلقائي الذي يسجل كل شيء بأمان
+import Chart from "chart.js/auto";
 
 export default function CardComplianceReasonsChart() {
-  React.useEffect(() => {
+  const canvasRef = useRef(null);
+
+  useEffect(() => {
+    if (!canvasRef.current) return;
+    const ctx = canvasRef.current.getContext("2d");
+
+    // 2. إعدادات الرسم البياني المحدثة لـ Chart.js v4
     const config = {
       type: "pie",
       data: {
@@ -10,7 +17,7 @@ export default function CardComplianceReasonsChart() {
         datasets: [
           {
             label: "Compliance Issues",
-            backgroundColor: ["#fbbf24", "#f87171", "#facc15", "#fb923c"], // amber, red, yellow, orange
+            backgroundColor: ["#fbbf24", "#f87171", "#facc15", "#fb923c"], // amber-400, red-400, yellow-400, orange-400
             borderColor: "#ffffff",
             data: [40, 30, 20, 10],
           },
@@ -19,24 +26,39 @@ export default function CardComplianceReasonsChart() {
       options: {
         maintainAspectRatio: false,
         responsive: true,
-        title: { display: false },
-        legend: { position: "bottom", labels: { fontColor: "rgba(0,0,0,.4)" } },
-        tooltips: {
-          callbacks: {
-            label: function (tooltipItem, data) {
-              let label = data.labels[tooltipItem.index] || '';
-              let value = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
-              return `${label}: ${value}%`;
+        plugins: { // 3. تحديث بنية الـ plugins
+          legend: {
+            position: "bottom",
+            labels: {
+              color: "rgba(0,0,0,.6)", // لون أغمق للنص
+            },
+          },
+          title: {
+            display: false,
+          },
+          tooltip: { // 4. تحديث بنية الـ tooltips
+            callbacks: {
+              label: function (context) {
+                let label = context.label || '';
+                let value = context.parsed || 0;
+                return `${label}: ${value}%`;
+              }
             }
           }
         }
       },
     };
-    const ctx = document.getElementById("compliance-reasons-chart").getContext("2d");
-    window.myPie = new Chart(ctx, config);
+
+    const chartInstance = new Chart(ctx, config);
+
+    return () => {
+      chartInstance.destroy();
+    };
   }, []);
+
   return (
-    <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded-lg p-4">
+    // 5. تصميم البطاقة (لا تغيير هنا)
+    <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded-lg">
       <div className="rounded-t mb-0 px-4 py-3 bg-transparent">
         <div className="flex flex-wrap items-center">
           <div className="relative w-full max-w-full flex-grow flex-1">
@@ -47,7 +69,7 @@ export default function CardComplianceReasonsChart() {
       </div>
       <div className="p-4 flex-auto">
         <div className="relative h-350-px">
-          <canvas id="compliance-reasons-chart"></canvas>
+          <canvas ref={canvasRef}></canvas>
         </div>
       </div>
     </div>
