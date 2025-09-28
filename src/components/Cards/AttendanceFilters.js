@@ -2,15 +2,31 @@
 import React from "react";
 import Select from "react-select";
 
-// أنماط مخصصة لـ react-select لتناسب المظهر الداكن
+// أنماط react-select للوضع الفاتح
 const selectStyles = {
-  control: (styles) => ({ ...styles, backgroundColor: '#334155', borderColor: '#475569', minHeight: '38px', height: '38px' }),
-  option: (styles, { isFocused }) => ({ ...styles, backgroundColor: isFocused ? '#475569' : '#334155', color: 'white' }),
-  multiValue: (styles) => ({ ...styles, backgroundColor: '#475569' }),
-  multiValueLabel: (styles) => ({ ...styles, color: 'white' }),
-  input: (styles) => ({ ...styles, color: 'white' }),
-  singleValue: (styles) => ({ ...styles, color: 'white' }),
-  menu: (styles) => ({ ...styles, backgroundColor: '#334155' }),
+  control: (styles) => ({
+    ...styles,
+    backgroundColor: 'white',
+    borderColor: '#cbd5e1', // slate-300
+    minHeight: '38px',
+    height: '38px',
+    boxShadow: 'none',
+    '&:hover': { borderColor: '#94a3b8' } // slate-400
+  }),
+  option: (styles, { isFocused }) => ({
+    ...styles,
+    backgroundColor: isFocused ? '#f1f5f9' : 'white', // slate-100 on focus
+    color: '#1e293b', // slate-800
+    ':active': {
+      ...styles[':active'],
+      backgroundColor: '#e2e8f0', // slate-200
+    },
+  }),
+  multiValue: (styles) => ({ ...styles, backgroundColor: '#e2e8f0' }),
+  multiValueLabel: (styles) => ({ ...styles, color: '#1e293b' }),
+  input: (styles) => ({ ...styles, color: '#1e293b' }),
+  singleValue: (styles) => ({ ...styles, color: '#1e293b' }),
+  menu: (styles) => ({ ...styles, backgroundColor: 'white', border: '1px solid #e2e8f0' }),
 };
 
 export default function AttendanceFilters({ filters, setFilters, departmentOptions, locationOptions }) {
@@ -19,16 +35,17 @@ export default function AttendanceFilters({ filters, setFilters, departmentOptio
   };
 
   return (
-    <div className="bg-white dark:bg-slate-700 shadow rounded-lg p-4 mb-6">
-      <h3 className="text-slate-700 dark:text-white font-semibold mb-4">Filters</h3>
+    // تم إزالة الخلفية والظل من هنا لأنها ستكون جزءًا من CardTable
+    <div className="p-4"> 
+      <h3 className="text-slate-700 font-semibold mb-4">Filters</h3>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         {/* Employee Search */}
         <div>
-          <label className="block text-sm text-slate-600 dark:text-slate-300 mb-1">Employee</label>
+          <label className="block text-sm font-medium text-slate-600 mb-1">Employee</label>
           <input
             type="text"
             placeholder="Search by name..."
-            className="border rounded px-3 py-1.5 w-full bg-white dark:bg-slate-700 dark:border-slate-500 dark:text-white"
+            className="h-[38px] border rounded px-3 py-1.5 w-full bg-white border-slate-300 text-slate-700 focus:outline-none focus:ring-1 focus:ring-sky-500 focus:border-sky-500"
             value={filters.employee}
             onChange={(e) => handleFilterChange('employee', e.target.value)}
           />
@@ -36,7 +53,7 @@ export default function AttendanceFilters({ filters, setFilters, departmentOptio
 
         {/* Department Select */}
         <div>
-          <label className="block text-sm text-slate-600 dark:text-slate-300 mb-1">Department</label>
+          <label className="block text-sm font-medium text-slate-600 mb-1">Department</label>
           <Select
             isMulti
             options={departmentOptions}
@@ -47,7 +64,7 @@ export default function AttendanceFilters({ filters, setFilters, departmentOptio
 
         {/* Location Select */}
         <div>
-          <label className="block text-sm text-slate-600 dark:text-slate-300 mb-1">Location</label>
+          <label className="block text-sm font-medium text-slate-600 mb-1">Location</label>
           <Select
             isMulti
             options={locationOptions}
@@ -56,15 +73,16 @@ export default function AttendanceFilters({ filters, setFilters, departmentOptio
           />
         </div>
         
-        {/* Quick Anomaly Filter */}
+        {/* Quick Filter */}
         <div>
-          <label className="block text-sm text-slate-600 dark:text-slate-300 mb-1">Quick Filter</label>
+          <label className="block text-sm font-medium text-slate-600 mb-1">Quick Filter</label>
           <select
-            className="border rounded px-3 py-1.5 w-full bg-white dark:bg-slate-700 dark:border-slate-500 dark:text-white"
+            className="h-[38px] border rounded px-3 py-1.5 w-full bg-white border-slate-300 text-slate-700 focus:outline-none focus:ring-1 focus:ring-sky-500 focus:border-sky-500"
             value={filters.quick}
             onChange={(e) => handleFilterChange('quick', e.target.value)}
           >
             <option value="">All Statuses</option>
+            <option value="On Time">On Time</option>
             <option value="Late">Late Only</option>
             <option value="Override">Overrides</option>
             <option value="Failure">Verification Failed</option>

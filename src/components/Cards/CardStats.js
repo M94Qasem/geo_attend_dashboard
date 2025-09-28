@@ -1,15 +1,49 @@
 import React from "react";
 import PropTypes from "prop-types";
-// 1. استيراد كل الأيقونات التي نحتاجها
-import { FaUserCheck, FaUserSlash, FaClock, FaExclamationTriangle, FaChartPie } from "react-icons/fa";
+import {
+  FaUserCheck,
+  FaUserSlash,
+  FaClock,
+  FaExclamationTriangle,
+  FaChartPie,
+  FaUsers,
+  FaPercentage,
+} from "react-icons/fa";
+import { FaChartBar } from "react-icons/fa6";
 
-// 2. تحديث الخريطة لتشمل كل الأيقونات
+// خريطة لربط اسم الأيقونة بالمكون الفعلي
 const iconMap = {
-  "FaUserCheck": FaUserCheck,
-  "FaUserSlash": FaUserSlash,
-  "FaClock": FaClock,
-  "FaExclamationTriangle": FaExclamationTriangle,
-  "FaChartPie": FaChartPie, // أيقونة افتراضية
+  FaUserCheck,
+  FaUserSlash,
+  FaClock,
+  FaExclamationTriangle,
+  FaChartPie,
+  FaUsers,
+  FaPercentage,
+  FaChartBar,
+  // دعم الأسماء القديمة
+  "far fa-chart-bar": FaChartBar,
+  "fas fa-chart-pie": FaChartPie,
+  "fas fa-users": FaUsers,
+  "fas fa-percent": FaPercentage,
+};
+
+// 1. خريطة للألوان (الحل لمشكلة Tailwind Purge)
+// نكتب هنا أسماء الكلاسات الكاملة
+const colorMap = {
+  red: "bg-red-500",
+  orange: "bg-orange-500",
+  pink: "bg-pink-500",
+  emerald: "bg-emerald-500",
+  green: "bg-green-500",
+  blue: "bg-blue-500",
+  sky: "bg-sky-500",
+  yellow: "bg-yellow-500",
+  // دعم القيم القديمة التي كانت تحتوي على "bg-"
+  "bg-red-500": "bg-red-500",
+  "bg-orange-500": "bg-orange-500",
+  "bg-pink-500": "bg-pink-500",
+  "bg-sky-500": "bg-sky-500",
 };
 
 export default function CardStats({
@@ -19,13 +53,18 @@ export default function CardStats({
   statPercent,
   statPercentColor,
   statDescripiron,
-  icon, // تم تغيير الاسم من statIconName إلى icon
-  color, // تم تغيير الاسم من statIconColor إلى color
+  statIconName, // Prop قديمة
+  statIconColor, // Prop قديمة
+  icon, // Prop جديدة
+  color, // Prop جديدة
 }) {
-  const IconComponent = iconMap[icon] || FaChartPie;
-  
-  // 3. بناء كلاس اللون ديناميكياً
-  const iconColorClass = `bg-${color}-500`;
+  // 2. دمج الـ props بذكاء
+  const finalIconName = icon || statIconName;
+  const finalColorName = color || statIconColor;
+
+  // اختيار المكون والكلاس من الخرائط
+  const IconComponent = iconMap[finalIconName] || FaChartPie;
+  const iconColorClass = colorMap[finalColorName] || "bg-gray-500"; // لون افتراضي آمن
 
   return (
     <div className="relative flex flex-col min-w-0 break-words bg-white rounded mb-6 xl:mb-0 shadow-lg">
@@ -41,11 +80,9 @@ export default function CardStats({
           </div>
           <div className="relative w-auto pl-4 flex-initial">
             <div
-              className={
-                `text-white p-3 text-center inline-flex items-center justify-center w-12 h-12 shadow-lg rounded-full ${iconColorClass}`
-              }
+              className={`text-white p-3 text-center inline-flex items-center justify-center w-12 h-12 shadow-lg rounded-full ${iconColorClass}`}
             >
-              <IconComponent />
+              <IconComponent size={20} />
             </div>
           </div>
         </div>
@@ -76,8 +113,6 @@ export default function CardStats({
 CardStats.defaultProps = {
   statSubtitle: "Metric",
   statTitle: "0",
-  icon: "FaChartPie",
-  color: "slate",
 };
 
 CardStats.propTypes = {
@@ -87,6 +122,8 @@ CardStats.propTypes = {
   statPercent: PropTypes.string,
   statPercentColor: PropTypes.string,
   statDescripiron: PropTypes.string,
+  statIconName: PropTypes.string,
+  statIconColor: PropTypes.string,
   icon: PropTypes.string,
   color: PropTypes.string,
 };

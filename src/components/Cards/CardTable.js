@@ -9,10 +9,16 @@ import {
 } from "@tanstack/react-table";
 import { FaSort, FaSortUp, FaSortDown } from "react-icons/fa";
 
-export default function CardTable({ color, data, columns }) {
+// 1. قبول مكون الفلاتر "filtersComponent" كـ prop
+export default function CardTable({
+  color,
+  data,
+  columns,
+  onExport,
+  filtersComponent,
+}) {
   const [sorting, setSorting] = useState([]);
 
-  // 1. استخدام useReactTable مع البيانات والأعمدة التي يتم تمريرها كـ props
   const table = useReactTable({
     data,
     columns,
@@ -23,11 +29,10 @@ export default function CardTable({ color, data, columns }) {
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     getSortedRowModel: getSortedRowModel(),
-    // يمكنك ضبط حجم الصفحة الافتراضي هنا
     initialState: {
-        pagination: {
-            pageSize: 8,
-        },
+      pagination: {
+        pageSize: 8,
+      },
     },
   });
 
@@ -38,34 +43,61 @@ export default function CardTable({ color, data, columns }) {
         (color === "light" ? "bg-white" : "bg-slate-700 text-white")
       }
     >
+      {/* 2. عرض مكون الفلاتر هنا إذا تم تمريره */}
+      {filtersComponent && (
+        <div className="rounded-t-lg mb-0 px-4 py-3 border-0">
+          {filtersComponent}
+        </div>
+      )}
+
       <div className="rounded-t mb-0 px-4 py-3 border-0">
-        <h3 className={"font-semibold text-lg " + (color === "light" ? "text-slate-700" : "text-white")}>
-          Attendance Records
-        </h3>
+        <div className="flex flex-wrap items-center justify-between">
+          <h3
+            className={
+              "font-semibold text-lg " +
+              (color === "light" ? "text-slate-700" : "text-white")
+            }
+          >
+            Attendance Records
+          </h3>
+          <button
+            onClick={onExport}
+            className="px-4 py-2 bg-sky-500 text-white text-sm font-bold rounded-md hover:bg-sky-600 shadow transition-all disabled:bg-sky-300 disabled:cursor-not-allowed"
+            disabled={data.length === 0}
+          >
+            Export CSV
+          </button>
+        </div>
       </div>
       <div className="block w-full overflow-x-auto">
-        {/* 2. بناء الجدول بشكل ديناميكي باستخدام flexRender */}
         <table className="items-center w-full bg-transparent border-collapse">
-          <thead className="sticky top-0">
-            {table.getHeaderGroups().map(headerGroup => (
+          <thead>
+            {table.getHeaderGroups().map((headerGroup) => (
               <tr key={headerGroup.id}>
-                {headerGroup.headers.map(header => (
+                {headerGroup.headers.map((header) => (
                   <th
                     key={header.id}
-                    className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-slate-50 text-slate-500 border-slate-100 dark:bg-slate-600 dark:text-slate-200 dark:border-slate-500"
+                    className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-slate-50 text-slate-500 border-slate-100"
                   >
-                    {/* 3. تفعيل الفرز عند النقر على رأس العمود */}
                     <div
                       {...{
-                        className: header.column.getCanSort() ? 'cursor-pointer select-none flex items-center gap-2' : 'flex items-center gap-2',
+                        className: header.column.getCanSort()
+                          ? "cursor-pointer select-none flex items-center gap-2"
+                          : "flex items-center gap-2",
                         onClick: header.column.getToggleSortingHandler(),
                       }}
                     >
-                      {flexRender(header.column.columnDef.header, header.getContext())}
+                      {flexRender(
+                        header.column.columnDef.header,
+                        header.getContext()
+                      )}
                       {{
                         asc: <FaSortUp />,
                         desc: <FaSortDown />,
-                      }[header.column.getIsSorted()] ?? (header.column.getCanSort() ? <FaSort className="opacity-30" /> : null)}
+                      }[header.column.getIsSorted()] ??
+                        (header.column.getCanSort() ? (
+                          <FaSort className="opacity-30" />
+                        ) : null)}
                     </div>
                   </th>
                 ))}
@@ -73,48 +105,94 @@ export default function CardTable({ color, data, columns }) {
             ))}
           </thead>
           <tbody>
-            {table.getRowModel().rows.map(row => (
-              <tr key={row.id} className="hover:bg-gray-50 dark:hover:bg-slate-600/50 transition-colors">
-                {row.getVisibleCells().map(cell => (
-                  <td key={cell.id} className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                  </td>
-                ))}
+            {table.getRowModel().rows.length > 0 ? (
+              table.getRowModel().rows.map((row) => (
+                <tr
+                  key={row.id}
+                  className="hover:bg-gray-50 transition-colors"
+                >
+                  {row.getVisibleCells().map((cell) => (
+                    <td
+                      key={cell.id}
+                      className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
+                    >
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext()
+                      )}
+                    </td>
+                  ))}
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td
+                  colSpan={columns.length}
+                  className="text-center py-10 text-slate-500"
+                >
+                  No records found for the selected filters.
+                </td>
               </tr>
-            ))}
+            )}
           </tbody>
         </table>
       </div>
-      {/* 4. عناصر التحكم بالترقيم (Pagination) */}
-      <div className="py-3 px-4 flex items-center justify-between flex-wrap gap-2 border-t border-solid border-slate-200 dark:border-slate-600">
-        <span className="text-sm font-medium">
-          Page{' '}
-          <strong>
-            {table.getState().pagination.pageIndex + 1} of {table.getPageCount()}
-          </strong>
-        </span>
-        <div className="flex items-center gap-2">
-          <button onClick={() => table.setPageIndex(0)} disabled={!table.getCanPreviousPage()} className="p-1 px-2 border rounded disabled:opacity-50 disabled:cursor-not-allowed transition-opacity">
-            {'<<'}
-          </button>
-          <button onClick={() => table.previousPage()} disabled={!table.getCanPreviousPage()} className="p-1 px-2 border rounded disabled:opacity-50 disabled:cursor-not-allowed transition-opacity">
-            {'<'}
-          </button>
-          <button onClick={() => table.nextPage()} disabled={!table.getCanNextPage()} className="p-1 px-2 border rounded disabled:opacity-50 disabled:cursor-not-allowed transition-opacity">
-            {'>'}
-          </button>
-          <button onClick={() => table.setPageIndex(table.getPageCount() - 1)} disabled={!table.getCanNextPage()} className="p-1 px-2 border rounded disabled:opacity-50 disabled:cursor-not-allowed transition-opacity">
-            {'>>'}
-          </button>
+      {/* 3. تصحيح منطق عرض الترقيم */}
+      {table.getPageCount() > 1 && (
+        <div className="py-3 px-4 flex items-center justify-between flex-wrap gap-2 border-t border-solid border-slate-200">
+          <span className="text-sm font-medium text-slate-600">
+            Page{" "}
+            <strong>
+              {table.getState().pagination.pageIndex + 1} of{" "}
+              {table.getPageCount()}
+            </strong>
+          </span>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => table.setPageIndex(0)}
+              disabled={!table.getCanPreviousPage()}
+              className="p-1 px-2 border rounded disabled:opacity-50 disabled:cursor-not-allowed transition-opacity"
+            >
+              {"<<"}
+            </button>
+            <button
+              onClick={() => table.previousPage()}
+              disabled={!table.getCanPreviousPage()}
+              className="p-1 px-2 border rounded disabled:opacity-50 disabled:cursor-not-allowed transition-opacity"
+            >
+              {"<"}
+            </button>
+            <button
+              onClick={() => table.nextPage()}
+              disabled={!table.getCanNextPage()}
+              className="p-1 px-2 border rounded disabled:opacity-50 disabled:cursor-not-allowed transition-opacity"
+            >
+              {">"}
+            </button>
+            <button
+              onClick={() => table.setPageIndex(table.getPageCount() - 1)}
+              disabled={!table.getCanNextPage()}
+              className="p-1 px-2 border rounded disabled:opacity-50 disabled:cursor-not-allowed transition-opacity"
+            >
+              {">>"}
+            </button>
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }
 
-// 5. تحديث propTypes ليعكس أن البيانات والأعمدة تأتي من الخارج
+CardTable.defaultProps = {
+  color: "light",
+  onExport: () => {},
+  filtersComponent: null,
+};
+
 CardTable.propTypes = {
   color: PropTypes.oneOf(["light", "dark"]),
   data: PropTypes.array.isRequired,
   columns: PropTypes.array.isRequired,
+  onExport: PropTypes.func,
+  filtersComponent: PropTypes.node, // Prop جديدة لمكون الفلاتر
 };
