@@ -8,10 +8,12 @@ import {
   FaChartPie,
   FaUsers,
   FaPercentage,
+  FaMapMarkedAlt,
+  FaWifi,
 } from "react-icons/fa";
 import { FaChartBar } from "react-icons/fa6";
 
-// خريطة لربط اسم الأيقونة بالمكون الفعلي
+// 1. خريطة لربط الأسماء النصية (strings) بمكونات الأيقونات
 const iconMap = {
   FaUserCheck,
   FaUserSlash,
@@ -20,16 +22,17 @@ const iconMap = {
   FaChartPie,
   FaUsers,
   FaPercentage,
+  FaMapMarkedAlt,
+  FaWifi,
   FaChartBar,
-  // دعم الأسماء القديمة
+  // دعم الأسماء القديمة من Font Awesome
   "far fa-chart-bar": FaChartBar,
   "fas fa-chart-pie": FaChartPie,
   "fas fa-users": FaUsers,
   "fas fa-percent": FaPercentage,
 };
 
-// 1. خريطة للألوان (الحل لمشكلة Tailwind Purge)
-// نكتب هنا أسماء الكلاسات الكاملة
+// 2. خريطة للألوان لضمان عدم حذفها من قبل Tailwind CSS
 const colorMap = {
   red: "bg-red-500",
   orange: "bg-orange-500",
@@ -53,18 +56,27 @@ export default function CardStats({
   statPercent,
   statPercentColor,
   statDescripiron,
-  statIconName, // Prop قديمة
-  statIconColor, // Prop قديمة
-  icon, // Prop جديدة
-  color, // Prop جديدة
+  statIconName, // Prop قديمة (string)
+  statIconColor, // Prop قديمة (string)
+  icon, // Prop جديدة (يمكن أن تكون string أو React element)
+  color, // Prop جديدة (string)
 }) {
-  // 2. دمج الـ props بذكاء
-  const finalIconName = icon || statIconName;
-  const finalColorName = color || statIconColor;
+  // 3. المنطق الذكي لتحديد الأيقونة
+  let IconComponent;
+  const finalIconProp = icon || statIconName;
 
-  // اختيار المكون والكلاس من الخرائط
-  const IconComponent = iconMap[finalIconName] || FaChartPie;
-  const iconColorClass = colorMap[finalColorName] || "bg-gray-500"; // لون افتراضي آمن
+  if (React.isValidElement(finalIconProp)) {
+    // الحالة 1: إذا كانت الـ prop هي عنصر React بالفعل (مثل <FaUsers />)
+    IconComponent = () => React.cloneElement(finalIconProp, { size: 20 });
+  } else {
+    // الحالة 2: إذا كانت الـ prop هي نص (string)
+    const FoundIcon = iconMap[finalIconProp] || FaChartPie;
+    IconComponent = () => <FoundIcon size={20} />;
+  }
+
+  // 4. تحديد اللون بنفس الطريقة الذكية
+  const finalColorName = color || statIconColor;
+  const iconColorClass = colorMap[finalColorName] || "bg-gray-500";
 
   return (
     <div className="relative flex flex-col min-w-0 break-words bg-white rounded mb-6 xl:mb-0 shadow-lg">
@@ -82,7 +94,7 @@ export default function CardStats({
             <div
               className={`text-white p-3 text-center inline-flex items-center justify-center w-12 h-12 shadow-lg rounded-full ${iconColorClass}`}
             >
-              <IconComponent size={20} />
+              <IconComponent />
             </div>
           </div>
         </div>
@@ -124,6 +136,7 @@ CardStats.propTypes = {
   statDescripiron: PropTypes.string,
   statIconName: PropTypes.string,
   statIconColor: PropTypes.string,
-  icon: PropTypes.string,
+  // جعل prop الأيقونة تقبل نصًا أو عنصرًا
+  icon: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
   color: PropTypes.string,
 };
