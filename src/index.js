@@ -9,10 +9,6 @@ import "assets/styles/tailwind.css";
 import Admin from "layouts/Admin.js";
 // import Auth from "layouts/Auth.js"; // FIX: Commented out Auth layout import
 
-// We don't need these views in the main entry point anymore
-// import Landing from "views/Landing.js";
-// import Profile from "views/Profile.js";
-// import Index from "views/Index.js";
 
 ReactDOM.render(
   <BrowserRouter>

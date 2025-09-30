@@ -10,6 +10,7 @@ import AttendanceActionModal from "../../components/Modals/AttendanceActionModal
 import CardTable from "../../components/Cards/CardTable.js";
 import CardStats from "../../components/Cards/CardStats.js";
 
+
 // --- البيانات والإعدادات ---
 const mockData = [
     // بيانات وهمية موسعة لإظهار الترقيم بشكل أفضل
@@ -110,17 +111,15 @@ export default function AttendanceLog() {
     },
   ], []);
 
-  return (
+ return (
     <>
-      <div className="relative bg-sky-600 md:pt-32 pb-16 pt-12">
+      {/* 1. حاوية الخلفية الزرقاء العلوية */}
+      <div className="relative bg-sky-600 md:pt-32 pb-32 pt-12">
         <div className="px-4 md:px-10 mx-auto w-full">
-          {/* خلفية فقط */}
-        </div>
-      </div>
-      
-      <div className="px-4 md:px-10 mx-auto w-full -m-24">
-        <div className="flex flex-wrap">
-            <div className="w-full lg:w-6/12 xl:w-3/12 px-4">
+          <div>
+            {/* بطاقات الإحصائيات */}
+            <div className="flex flex-wrap">
+              <div className="w-full lg:w-6/12 xl:w-3/12 px-4">
                 <CardStats 
                   statSubtitle="ON TIME" 
                   statTitle="350,897" 
@@ -128,11 +127,11 @@ export default function AttendanceLog() {
                   statPercent="3.48" 
                   statPercentColor="text-emerald-500" 
                   statDescripiron="Since last month" 
-                  icon="FaUserCheck" 
-                  color="green" 
+                  statIconName="far fa-chart-bar" 
+                  statIconColor="bg-green-500" 
                 />
-            </div>
-            <div className="w-full lg:w-6/12 xl:w-3/12 px-4">
+              </div>
+              <div className="w-full lg:w-6/12 xl:w-3/12 px-4">
                 <CardStats 
                   statSubtitle="LATE" 
                   statTitle="2,356" 
@@ -140,11 +139,11 @@ export default function AttendanceLog() {
                   statPercent="3.48" 
                   statPercentColor="text-red-500" 
                   statDescripiron="Since last week" 
-                  icon="FaClock" 
-                  color="orange" 
+                  statIconName="fas fa-chart-pie" 
+                  statIconColor="bg-orange-500" 
                 />
-            </div>
-            <div className="w-full lg:w-6/12 xl:w-3/12 px-4">
+              </div>
+              <div className="w-full lg:w-6/12 xl:w-3/12 px-4">
                 <CardStats 
                   statSubtitle="ABSENT" 
                   statTitle="924" 
@@ -152,11 +151,11 @@ export default function AttendanceLog() {
                   statPercent="1.10" 
                   statPercentColor="text-orange-500" 
                   statDescripiron="Since yesterday" 
-                  icon="FaUserSlash" 
-                  color="red" 
+                  statIconName="fas fa-users" 
+                  statIconColor="bg-pink-500" 
                 />
-            </div>
-            <div className="w-full lg:w-6/12 xl:w-3/12 px-4">
+              </div>
+              <div className="w-full lg:w-6/12 xl:w-3/12 px-4">
                 <CardStats 
                   statSubtitle="OVERRIDE" 
                   statTitle="49,65%" 
@@ -164,12 +163,17 @@ export default function AttendanceLog() {
                   statPercent="12" 
                   statPercentColor="text-emerald-500" 
                   statDescripiron="Since last month" 
-                  icon="FaExclamationTriangle" 
-                  color="blue" 
+                  statIconName="fas fa-percent" 
+                  statIconColor="bg-sky-500" 
                 />
+              </div>
             </div>
+          </div>
         </div>
+      </div>
 
+      {/* 2. حاوية المحتوى الرئيسي مع margin-top سالب */}
+      <div className="px-4 md:px-10 mx-auto w-full -m-24">
         <div className="flex flex-wrap mt-4">
           <div className="w-full mb-12">
             <CardTable 

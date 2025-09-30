@@ -7,8 +7,6 @@ import Sidebar from "components/Sidebar/Sidebar.js";
 
 // views
 import Dashboard from "views/admin/Dashboard.js";
-import Maps from "views/admin/Maps.js";
-import Settings from "views/admin/Settings.js";
 import AttendanceLog from "views/admin/AttendanceLog.js"; 
 import Management from "views/admin/Management.js";
 import Analytics from "views/admin/Analytics.js"; 
@@ -19,14 +17,15 @@ export default function Admin() {
       <Sidebar />
       <div className="relative md:ml-64 bg-slate-100 min-h-screen">
         <AdminNavbar />
+        
+        {/* 1. تم حذف padding-top من هنا */}
+        {/* الآن كل صفحة تبدأ من أعلى الشاشة، خلف الشريط العلوي */}
         <div className="w-full mx-auto">
           <Switch>
             <Route path="/admin/dashboard" exact component={Dashboard} />
-            <Route path="/admin/attendance-log" exact component={AttendanceLog} />
+            <Route path="/admin/attendance" exact component={AttendanceLog} />
             <Route path="/admin/management" exact component={Management} />
             <Route path="/admin/analytics" exact component={Analytics} />
-            <Route path="/admin/maps" exact component={Maps} />
-            <Route path="/admin/settings" exact component={Settings} />
             <Redirect from="/admin" to="/admin/dashboard" />
           </Switch>
         </div>

@@ -5,12 +5,10 @@ import AnalyticsFilterBar from "components/Cards/AnalyticsFilterBar.js";
 import CardAnalyticsKPI from "components/Cards/CardAnalyticsKPI.js";
 import CardMonthlyPerformanceChart from "components/Cards/CardMonthlyPerformanceChart.js";
 import CardComplianceReasonsChart from "components/Cards/CardComplianceReasonsChart.js";
-import CardAnalyticsTable from "components/Cards/CardAnalyticsTable.js"; // <-- المكون الجديد للجدول
+import CardAnalyticsTable from "components/Cards/CardAnalyticsTable.js";
 
 export default function Analytics() {
   // --- بيانات وهمية للصفحة ---
-
-  // بيانات لبطاقات KPI
   const kpiData = {
     totalAttendanceDays: "1,250",
     avgCheckIn: "08:12 AM",
@@ -18,10 +16,8 @@ export default function Analytics() {
     complianceRate: "92%",
   };
 
-  // أعمدة الجدول التفصيلي
   const tableColumns = ["Date", "Employee", "Check-in", "Check-out", "Duration", "Status"];
   
-  // بيانات وهمية للجدول (أكثر من 10 صفوف لإظهار الترقيم)
   const tableData = [
     { date: "2025-09-11", employee: "John Doe", checkIn: "08:02", checkOut: "17:05", duration: "9h 3m", status: { text: "On-time", color: "emerald" } },
     { date: "2025-09-11", employee: "Jane Smith", checkIn: "08:17", checkOut: "17:01", duration: "8h 44m", status: { text: "Late", color: "orange" } },
@@ -39,36 +35,36 @@ export default function Analytics() {
 
   return (
     <>
-      {/* Header */}
+      {/* 1. حاوية الخلفية الزرقاء العلوية */}
       <div className="relative bg-sky-600 md:pt-32 pb-32 pt-12">
-        <div className="px-4 md:px-10 mx-auto w-full"></div>
+        <div className="px-4 md:px-10 mx-auto w-full">
+          {/* تم نقل بطاقات KPI هنا لتحقيق التصميم الصحيح */}
+          <div className="flex flex-wrap">
+            <div className="w-full lg:w-6/12 xl:w-3/12 px-2"><CardAnalyticsKPI title="Total Attendance Days" value={kpiData.totalAttendanceDays} icon="fas fa-calendar-check" iconColor="bg-sky-500"/></div>
+            <div className="w-full lg:w-6/12 xl:w-3/12 px-2"><CardAnalyticsKPI title="Average Check-in" value={kpiData.avgCheckIn} icon="fas fa-sign-in-alt" iconColor="bg-emerald-500"/></div>
+            <div className="w-full lg:w-6/12 xl:w-3/12 px-2"><CardAnalyticsKPI title="Average Check-out" value={kpiData.avgCheckOut} icon="fas fa-sign-out-alt" iconColor="bg-red-500"/></div>
+            <div className="w-full lg:w-6/12 xl:w-3/12 px-2"><CardAnalyticsKPI title="Compliance Rate" value={kpiData.complianceRate} icon="fas fa-percentage" iconColor="bg-indigo-500"/></div>
+          </div>
+        </div>
       </div>
       
-      {/* Page content */}
+      {/* 2. حاوية المحتوى الرئيسي مع margin-top سالب */}
       <div className="px-4 md:px-10 mx-auto w-full -m-24">
         
         {/* الصف الأول: شريط الفلترة */}
-        <div className="flex flex-wrap">
+        <div className="flex flex-wrap mt-4">
           <div className="w-full">
             <AnalyticsFilterBar />
           </div>
         </div>
 
-        {/* الصف الثاني: بطاقات KPI */}
-        <div className="flex flex-wrap mt-4">
-          <div className="w-full lg:w-6/12 xl:w-3/12 px-2"><CardAnalyticsKPI title="Total Attendance Days" value={kpiData.totalAttendanceDays} icon="fas fa-calendar-check" iconColor="bg-sky-500"/></div>
-          <div className="w-full lg:w-6/12 xl:w-3/12 px-2"><CardAnalyticsKPI title="Average Check-in" value={kpiData.avgCheckIn} icon="fas fa-sign-in-alt" iconColor="bg-emerald-500"/></div>
-          <div className="w-full lg:w-6/12 xl:w-3/12 px-2"><CardAnalyticsKPI title="Average Check-out" value={kpiData.avgCheckOut} icon="fas fa-sign-out-alt" iconColor="bg-red-500"/></div>
-          <div className="w-full lg:w-6/12 xl:w-3/12 px-2"><CardAnalyticsKPI title="Compliance Rate" value={kpiData.complianceRate} icon="fas fa-percentage" iconColor="bg-indigo-500"/></div>
-        </div>
-
-        {/* الصف الثالث: الرسوم البيانية */}
+        {/* الصف الثاني: الرسوم البيانية */}
         <div className="flex flex-wrap mt-4">
           <div className="w-full xl:w-8/12 px-2 mb-4 xl:mb-0"><CardMonthlyPerformanceChart /></div>
           <div className="w-full xl:w-4/12 px-2"><CardComplianceReasonsChart /></div>
         </div>
 
-        {/* 2. الصف الرابع: جدول البيانات التفصيلي */}
+        {/* الصف الثالث: جدول البيانات التفصيلي */}
         <div className="flex flex-wrap mt-4">
           <div className="w-full px-2">
             <CardAnalyticsTable title="Detailed Report Data" columns={tableColumns} data={tableData} />
