@@ -22,7 +22,8 @@ export default function Sidebar() {
 
   return (
     <>
-      <nav className="md:left-0 md:block md:fixed md:top-0 md:bottom-0 md:overflow-y-auto md:flex-row md:flex-nowrap md:overflow-hidden shadow-xl bg-white flex flex-wrap items-center justify-between relative md:w-64 z-10 py-4 px-6">
+      {/* ✅ تمت إضافة 'print:hidden' هنا لإخفاء الشريط الجانبي عند الطباعة */}
+      <nav className="md:left-0 md:block md:fixed md:top-0 md:bottom-0 md:overflow-y-auto md:flex-row md:flex-nowrap md:overflow-hidden shadow-xl bg-white flex flex-wrap items-center justify-between relative md:w-64 z-10 py-4 px-6 print:hidden dark:bg-slate-800">
         <div className="md:flex-col md:items-stretch md:min-h-full md:flex-nowrap px-0 flex flex-wrap items-center justify-between w-full mx-auto">
           {/* Toggler */}
           <button
@@ -34,7 +35,7 @@ export default function Sidebar() {
           </button>
           {/* Brand */}
           <Link
-            className="md:block text-left md:pb-2 text-slate-600 mr-0 inline-block whitespace-nowrap text-sm uppercase font-bold p-4 px-0"
+            className="md:block text-left md:pb-2 text-slate-600 dark:text-slate-300 mr-0 inline-block whitespace-nowrap text-sm uppercase font-bold p-4 px-0"
             to="/"
           >
             Geo-Attend
@@ -71,25 +72,24 @@ export default function Sidebar() {
             </div>
             
             <hr className="my-4 md:min-w-full" />
-            <h6 className="md:min-w-full text-slate-500 text-xs uppercase font-bold block pt-1 pb-4 no-underline">
+            <h6 className="md:min-w-full text-slate-500 dark:text-slate-400 text-xs uppercase font-bold block pt-1 pb-4 no-underline">
               Main Menu
             </h6>
             
             <ul className="md:flex-col md:min-w-full flex flex-col list-none">
               {links.map((link, index) => (
                 <li key={index} className="items-center">
-                  {/* 1. تطبيق التحسين على الرابط النشط */}
                   <NavLink
                     className={({ isActive }) => 
                       "text-xs uppercase py-3 font-bold block flex items-center gap-3 px-4 rounded-lg transition-colors " +
                       (isActive
-                        ? "bg-sky-50 text-sky-600" // خلفية زرقاء فاتحة ونص أزرق داكن
-                        : "text-slate-700 hover:bg-slate-100")
+                        ? "bg-sky-500 text-white" // تمييز أقوى للرابط النشط
+                        : "text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700")
                     }
                     to={link.path}
                     onClick={() => setCollapseShow("hidden")}
                   >
-                    <span className={({isActive}) => isActive ? 'text-sky-500' : 'text-slate-400'}>
+                    <span className={({isActive}) => isActive ? 'text-white' : 'text-slate-400 dark:text-slate-500'}>
                       {React.cloneElement(link.icon, { className: "text-lg" })}
                     </span>
                     {link.name}

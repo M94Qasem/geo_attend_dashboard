@@ -1,3 +1,5 @@
+// src/components/Cards/CardTable.js
+
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import {
@@ -9,9 +11,7 @@ import {
 } from "@tanstack/react-table";
 import { FaSort, FaSortUp, FaSortDown } from "react-icons/fa";
 
-// 1. قبول مكون الفلاتر "filtersComponent" كـ prop
 export default function CardTable({
-  color,
   data,
   columns,
   onExport,
@@ -37,27 +37,20 @@ export default function CardTable({
   });
 
   return (
-    <div
-      className={
-        "relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded " +
-        (color === "light" ? "bg-white" : "bg-slate-700 text-white")
-      }
-    >
-      {/* 2. عرض مكون الفلاتر هنا إذا تم تمريره */}
+    // ✅ 1. تعديل البطاقة الرئيسية لدعم الوضع الليلي والتخلص من prop اللون
+    <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-white dark:bg-slate-800">
+      
+      {/* 2. عرض مكون الفلاتر (الذي أصبح يدعم الوضع الليلي بنفسه) */}
       {filtersComponent && (
-        <div className="rounded-t-lg mb-0 px-4 py-3 border-0">
+        <div className="rounded-t-lg mb-0 border-b border-slate-200 dark:border-slate-700">
           {filtersComponent}
         </div>
       )}
 
-      <div className="rounded-t mb-0 px-4 py-3 border-0">
+      {/* 3. تعديل رأس الجدول (العنوان وزر التصدير) */}
+      <div className="rounded-t mb-0 px-4 py-3">
         <div className="flex flex-wrap items-center justify-between">
-          <h3
-            className={
-              "font-semibold text-lg " +
-              (color === "light" ? "text-slate-700" : "text-white")
-            }
-          >
+          <h3 className="font-semibold text-lg text-slate-700 dark:text-white">
             Attendance Records
           </h3>
           <button
@@ -69,6 +62,8 @@ export default function CardTable({
           </button>
         </div>
       </div>
+      
+      {/* 4. تعديل الجدول لدعم الوضع الليلي */}
       <div className="block w-full overflow-x-auto">
         <table className="items-center w-full bg-transparent border-collapse">
           <thead>
@@ -77,7 +72,8 @@ export default function CardTable({
                 {headerGroup.headers.map((header) => (
                   <th
                     key={header.id}
-                    className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-slate-50 text-slate-500 border-slate-100"
+                    // ✅ تعديل رأس الأعمدة للوضع الليلي
+                    className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-slate-50 dark:bg-slate-700 text-slate-500 dark:text-slate-300 border-slate-100 dark:border-slate-600"
                   >
                     <div
                       {...{
@@ -109,12 +105,14 @@ export default function CardTable({
               table.getRowModel().rows.map((row) => (
                 <tr
                   key={row.id}
-                  className="hover:bg-gray-50 transition-colors"
+                  // ✅ تعديل لون التحويم للصفوف
+                  className="hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors"
                 >
                   {row.getVisibleCells().map((cell) => (
                     <td
                       key={cell.id}
-                      className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
+                      // ✅ تعديل لون النص والحدود للخلايا
+                      className="border-t-0 dark:border-slate-700 px-6 align-middle text-sm whitespace-nowrap p-4 text-slate-700 dark:text-slate-300"
                     >
                       {flexRender(
                         cell.column.columnDef.cell,
@@ -128,7 +126,8 @@ export default function CardTable({
               <tr>
                 <td
                   colSpan={columns.length}
-                  className="text-center py-10 text-slate-500"
+                  // ✅ تعديل نص "لا توجد سجلات"
+                  className="text-center py-10 text-slate-500 dark:text-slate-400"
                 >
                   No records found for the selected filters.
                 </td>
@@ -137,10 +136,11 @@ export default function CardTable({
           </tbody>
         </table>
       </div>
-      {/* 3. تصحيح منطق عرض الترقيم */}
+      
+      {/* 5. تعديل قسم الترقيم للوضع الليلي */}
       {table.getPageCount() > 1 && (
-        <div className="py-3 px-4 flex items-center justify-between flex-wrap gap-2 border-t border-solid border-slate-200">
-          <span className="text-sm font-medium text-slate-600">
+        <div className="py-3 px-4 flex items-center justify-between flex-wrap gap-2 border-t border-solid border-slate-200 dark:border-slate-700">
+          <span className="text-sm font-medium text-slate-600 dark:text-slate-300">
             Page{" "}
             <strong>
               {table.getState().pagination.pageIndex + 1} of{" "}
@@ -151,28 +151,28 @@ export default function CardTable({
             <button
               onClick={() => table.setPageIndex(0)}
               disabled={!table.getCanPreviousPage()}
-              className="p-1 px-2 border rounded disabled:opacity-50 disabled:cursor-not-allowed transition-opacity"
+              className="p-1 px-2 border rounded disabled:opacity-50 disabled:cursor-not-allowed transition-opacity border-slate-300 dark:border-slate-600 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700"
             >
               {"<<"}
             </button>
             <button
               onClick={() => table.previousPage()}
               disabled={!table.getCanPreviousPage()}
-              className="p-1 px-2 border rounded disabled:opacity-50 disabled:cursor-not-allowed transition-opacity"
+              className="p-1 px-2 border rounded disabled:opacity-50 disabled:cursor-not-allowed transition-opacity border-slate-300 dark:border-slate-600 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700"
             >
               {"<"}
             </button>
             <button
               onClick={() => table.nextPage()}
               disabled={!table.getCanNextPage()}
-              className="p-1 px-2 border rounded disabled:opacity-50 disabled:cursor-not-allowed transition-opacity"
+              className="p-1 px-2 border rounded disabled:opacity-50 disabled:cursor-not-allowed transition-opacity border-slate-300 dark:border-slate-600 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700"
             >
               {">"}
             </button>
             <button
               onClick={() => table.setPageIndex(table.getPageCount() - 1)}
               disabled={!table.getCanNextPage()}
-              className="p-1 px-2 border rounded disabled:opacity-50 disabled:cursor-not-allowed transition-opacity"
+              className="p-1 px-2 border rounded disabled:opacity-50 disabled:cursor-not-allowed transition-opacity border-slate-300 dark:border-slate-600 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700"
             >
               {">>"}
             </button>
@@ -184,15 +184,13 @@ export default function CardTable({
 }
 
 CardTable.defaultProps = {
-  color: "light",
   onExport: () => {},
   filtersComponent: null,
 };
 
 CardTable.propTypes = {
-  color: PropTypes.oneOf(["light", "dark"]),
   data: PropTypes.array.isRequired,
   columns: PropTypes.array.isRequired,
   onExport: PropTypes.func,
-  filtersComponent: PropTypes.node, // Prop جديدة لمكون الفلاتر
+  filtersComponent: PropTypes.node,
 };

@@ -1,3 +1,5 @@
+// src/components/Navbars/AdminNavbar.js
+
 import React, { useState, useEffect } from "react";
 import { FaSearch, FaMoon, FaSun } from "react-icons/fa";
 
@@ -5,34 +7,36 @@ import UserDropdown from "components/Dropdowns/UserDropdown.js";
 import NotificationDropdown from "components/Dropdowns/NotificationDropdown.js";
 
 export default function AdminNavbar() {
-  const [darkMode, setDarkMode] = useState(false);
-  // 1. استخدام الحالة التي اقترحتها أنت لمراقبة التمرير
+  const [darkMode, setDarkMode] = useState(() => {
+    return document.documentElement.classList.contains('dark');
+  });
   const [scrolled, setScrolled] = useState(false);
 
   const toggleDarkMode = () => {
-    setDarkMode(!darkMode);
-    if (!darkMode) {
+    const isDark = !darkMode;
+    setDarkMode(isDark);
+    if (isDark) {
       document.documentElement.classList.add("dark");
     } else {
       document.documentElement.classList.remove("dark");
     }
   };
 
-  // 2. استخدام useEffect الذي اقترحته أنت
   useEffect(() => {
     const handleScroll = () => {
-      // تغيير الحالة إذا كان التمرير أكبر من 10 بكسل
       setScrolled(window.scrollY > 10);
     };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []); // يعمل مرة واحدة فقط
+  }, []);
 
   return (
-    // 3. تطبيق الكلاسات الديناميكية التي اقترحتها أنت
     <nav
-      className={`fixed top-0 left-0 right-0 z-20 transition-colors duration-300 md:ml-64 ${
-        scrolled ? "bg-sky-600 shadow-md" : "bg-transparent"
+      // ✅ استخدام z-50، وهو الآن كافٍ بفضل تعديلات الـ CSS
+      className={`fixed top-0 left-0 right-0 z-50 transition-colors duration-300 md:ml-64 print:hidden ${
+        scrolled 
+          ? "bg-sky-600 dark:bg-slate-700 shadow-md" 
+          : "bg-transparent"
       }`}
     >
       <div className="flex items-center justify-between px-6 py-3">
@@ -47,7 +51,7 @@ export default function AdminNavbar() {
             <input
               type="text"
               placeholder="Search here..."
-              className="w-full pl-10 pr-4 py-2 rounded-lg text-sm text-slate-700 placeholder-slate-400 shadow focus:outline-none focus:ring-2 focus:ring-sky-400"
+              className="w-full pl-10 pr-4 py-2 rounded-lg text-sm text-slate-700 placeholder-slate-400 shadow focus:outline-none focus:ring-2 focus:ring-sky-400 dark:bg-slate-800 dark:text-white dark:placeholder-slate-400"
             />
           </div>
         </div>

@@ -1,5 +1,37 @@
+/* src/assets/styles/index.css */
+
 @tailwind base;
-
 @tailwind components;
-
 @tailwind utilities;
+
+/* 
+ * قواعد CSS المخصصة (Overrides)
+ */
+
+/* ✅✅✅ قواعد CSS المخصصة لـ Leaflet (النسخة النهائية) */
+
+/* 1. استهداف جميع طبقات الخريطة الرئيسية */
+.leaflet-pane,
+.leaflet-tile-pane,
+.leaflet-overlay-pane,
+.leaflet-shadow-pane,
+.leaflet-marker-pane,
+.leaflet-tooltip-pane {
+  z-index: 10 !important;
+}
+
+/* 2. استهداف حاويات عناصر التحكم (مثل أزرار الزوم) */
+.leaflet-top,
+.leaflet-bottom {
+  z-index: 10 !important;
+}
+
+/* 3. رفع طبقة الـ Popup قليلاً لتظهر فوق كل شيء آخر في الخريطة */
+.leaflet-popup-pane {
+  z-index: 20 !important;
+}
+
+/* 4. يمكن إبقاء هذا للتحكم في أي عناصر تحكم فردية إذا لزم الأمر */
+.leaflet-control {
+  z-index: 20 !important;
+}

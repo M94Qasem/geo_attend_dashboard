@@ -1,3 +1,5 @@
+// src/views/admin/Dashboard.js
+
 import React from "react";
 
 // استيراد كل المكونات
@@ -11,8 +13,8 @@ import CardComplianceChart from "components/Cards/CardComplianceChart.js";
 export default function Dashboard() {
   return (
     <>
-      {/* 1. حاوية الخلفية الزرقاء العلوية */}
-      <div className="relative bg-sky-600 md:pt-32 pb-32 pt-12">
+      {/* ✅ تم تعديل الهيدر ليدعم الوضع الليلي ويتناسق مع التصميم */}
+      <div className="relative bg-sky-600 dark:bg-slate-700 md:pt-32 pb-32 pt-12 print:hidden">
         <div className="px-4 md:px-10 mx-auto w-full">
           <div>
             {/* بطاقات الإحصائيات */}
@@ -21,7 +23,7 @@ export default function Dashboard() {
                 <CardStats
                   statSubtitle="Live Attendance"
                   statTitle="15"
-                  statIconName="fas fa-user-check" // استخدام الصيغة القديمة المتوافقة
+                  statIconName="fas fa-user-check"
                   statIconColor="bg-emerald-500"
                 />
               </div>
@@ -29,7 +31,7 @@ export default function Dashboard() {
                 <CardStats
                   statSubtitle="Late Today"
                   statTitle="2"
-                  statIconName="fas fa-clock" // استخدام الصيغة القديمة المتوافقة
+                  statIconName="fas fa-clock"
                   statIconColor="bg-orange-500"
                 />
               </div>
@@ -37,7 +39,7 @@ export default function Dashboard() {
                 <CardStats
                   statSubtitle="Absent Today"
                   statTitle="5"
-                  statIconName="fas fa-user-slash" // استخدام الصيغة القديمة المتوافقة
+                  statIconName="fas fa-user-slash"
                   statIconColor="bg-red-500"
                 />
               </div>
@@ -45,7 +47,7 @@ export default function Dashboard() {
                 <CardStats
                   statSubtitle="Pending Overrides"
                   statTitle="3"
-                  statIconName="fas fa-exclamation-triangle" // استخدام الصيغة القديمة المتوافقة
+                  statIconName="fas fa-exclamation-triangle"
                   statIconColor="bg-yellow-500"
                 />
               </div>
@@ -54,8 +56,8 @@ export default function Dashboard() {
         </div>
       </div>
 
-      {/* 2. حاوية المحتوى الرئيسي مع margin-top سالب لرفعها فوق الخلفية */}
-      <div className="px-4 md:px-10 mx-auto w-full -m-24">
+      {/* حاوية المحتوى الرئيسي مع دعم الطباعة */}
+      <div className="px-4 md:px-10 mx-auto w-full -m-24 print:m-0 print:p-0">
         
         {/* الصف الأول: الرسوم البيانية */}
         <div className="flex flex-wrap mt-4">

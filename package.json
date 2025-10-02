@@ -23,7 +23,8 @@
     "react-router": "5.3.4",
     "react-router-dom": "5.3.4",
     "react-scripts": "5.0.1",
-    "react-select": "^5.10.2"
+    "react-select": "^5.10.2",
+    "recharts": "^3.2.1"
   },
   "scripts": {
     "start": "react-scripts start",

@@ -1,3 +1,5 @@
+// src/layouts/Admin.js
+
 import React from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
 
@@ -15,11 +17,10 @@ export default function Admin() {
   return (
     <>
       <Sidebar />
-      <div className="relative md:ml-64 bg-slate-100 min-h-screen">
+      {/* ✅ إضافة كلاسات الوضع الليلي هنا لتغيير لون خلفية الصفحة */}
+      <div className="relative md:ml-64 bg-slate-100 dark:bg-slate-900 min-h-screen">
         <AdminNavbar />
         
-        {/* 1. تم حذف padding-top من هنا */}
-        {/* الآن كل صفحة تبدأ من أعلى الشاشة، خلف الشريط العلوي */}
         <div className="w-full mx-auto">
           <Switch>
             <Route path="/admin/dashboard" exact component={Dashboard} />

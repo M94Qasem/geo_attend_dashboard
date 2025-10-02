@@ -1,3 +1,5 @@
+// src/components/Management/OverrideManagementTab.js
+
 import React, { useState } from "react";
 import { FaCheck, FaTimes } from "react-icons/fa";
 
@@ -13,38 +15,40 @@ export default function OverrideManagementTab() {
 
   const handleAction = (action, overrideId) => {
     alert(`Action: ${action} on Override ID: ${overrideId}`);
-    // إزالة الطلب من القائمة بعد معالجته
     setOverrides(prev => prev.filter(o => o.id !== overrideId));
   };
 
   return (
     <div className="p-4">
-      <div className="bg-white rounded-lg shadow-md border border-slate-200 overflow-hidden">
-        <div className="p-4 border-b border-slate-200">
-          <h3 className="text-lg font-semibold text-slate-800">Pending Override Requests</h3>
-          <p className="text-sm text-slate-500">Review and approve or reject manual attendance entries.</p>
+      {/* ✅ 1. تعديل الحاوية الرئيسية للوضع الليلي */}
+      <div className="bg-white dark:bg-slate-800 rounded-lg shadow-md border border-slate-200 dark:border-slate-700 overflow-hidden">
+        {/* ✅ 2. تعديل رأس البطاقة للوضع الليلي */}
+        <div className="p-4 border-b border-slate-200 dark:border-slate-700">
+          <h3 className="text-lg font-semibold text-slate-800 dark:text-white">Pending Override Requests</h3>
+          <p className="text-sm text-slate-500 dark:text-slate-400">Review and approve or reject manual attendance entries.</p>
         </div>
         
-        {/* 1. إضافة حاوية التمرير الأفقي للجدول */}
         <div className="overflow-x-auto">
-          <table className="min-w-full divide-y divide-slate-200">
-            <thead className="bg-slate-50">
+          <table className="min-w-full divide-y divide-slate-200 dark:divide-slate-700">
+            {/* ✅ 3. تعديل رأس الجدول للوضع الليلي */}
+            <thead className="bg-slate-50 dark:bg-slate-700">
               <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Employee</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Details</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Reason</th>
-                <th className="px-6 py-3 text-center text-xs font-medium text-slate-500 uppercase tracking-wider">Actions</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider">Employee</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider">Details</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider">Reason</th>
+                <th className="px-6 py-3 text-center text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider">Actions</th>
               </tr>
             </thead>
-            <tbody className="bg-white divide-y divide-slate-200">
+            {/* ✅ 4. تعديل جسم الجدول للوضع الليلي */}
+            <tbody className="bg-white dark:bg-slate-800 divide-y divide-slate-200 dark:divide-slate-700">
               {overrides.map((override) => (
-                <tr key={override.id}>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-slate-900">{override.employee}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-500">
+                <tr key={override.id} className="hover:bg-slate-50 dark:hover:bg-slate-700/50">
+                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-slate-900 dark:text-white">{override.employee}</td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-500 dark:text-slate-400">
                     <div>{override.date}</div>
                     <div>{override.requestedTime}</div>
                   </td>
-                  <td className="px-6 py-4 text-sm text-slate-500 max-w-sm whitespace-normal">{override.reason}</td>
+                  <td className="px-6 py-4 text-sm text-slate-500 dark:text-slate-400 max-w-sm whitespace-normal">{override.reason}</td>
                   <td className="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
                     <div className="flex items-center justify-center gap-3">
                       <button 
@@ -67,7 +71,7 @@ export default function OverrideManagementTab() {
               ))}
               {overrides.length === 0 && (
                 <tr>
-                  <td colSpan="4" className="text-center py-10 text-slate-500">
+                  <td colSpan="4" className="text-center py-10 text-slate-500 dark:text-slate-400">
                     No pending override requests. Great job!
                   </td>
                 </tr>

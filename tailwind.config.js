@@ -8,17 +8,31 @@ module.exports = {
     "./public/index.html",
   ],
 
+  // 1. تفعيل الوضع الليلي باستخدام استراتيجية الكلاس
+  darkMode: 'class',
+
+  // 2. قائمة الأمان لضمان بناء الكلاسات الديناميكية المستخدمة في الجداول
   safelist: [
     'text-emerald-500',
     'text-orange-500',
     'text-yellow-500',
     'text-red-500',
-    // You can add more status colors here in the future
+    'text-amber-500', // تمت الإضافة لضمان عمل لون حالة "Override"
   ],
 
   theme: {
     // استخدم `extend` لإضافة أو تعديل الكلاسات دون حذف الإعدادات الافتراضية
     extend: {
+      // 3. إضافة ألوان مخصصة للوضع الليلي لتسهيل الاستخدام
+      colors: {
+        dark: {
+          background: '#1a202c', // لون الخلفية الرئيسي للوضع الليلي
+          card: '#2d3748',       // لون خلفية البطاقات في الوضع الليلي
+          text: '#e2e8f0',        // لون النص الأساسي في الوضع الليلي
+          subtext: '#a0aec0',     // لون النص الفرعي في الوضع الليلي
+        },
+      },
+      
       // كل التخصيصات الخاصة بك محفوظة هنا
       minHeight: { "screen-75": "75vh" },
       fontSize: { 55: "55rem" },
@@ -45,9 +59,6 @@ module.exports = {
       backgroundSize: { full: "100%" },
     },
   },
-
-  // لا حاجة لقسم `variants` في v3
-  // لا حاجة لـ plugin الـ container المخصص في v3
 
   plugins: [
     // إضافة النماذج ضرورية لتنسيق حقول الإدخال
